@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2728D50F-0A00-400A-BC4D-3ABD342C1682}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Infrastructure.Data</RootNamespace>
+    <AssemblyName>Infrastructure.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySql.Data.Entity.6.9.6\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GenericRepository.cs" />
+    <Compile Include="Migrations\201505220938450_Initial.cs" />
+    <Compile Include="Migrations\201505220938450_Initial.Designer.cs">
+      <DependentUpon>201505220938450_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505260735110_AddedInitialsToProfile.cs" />
+    <Compile Include="Migrations\201505260735110_AddedInitialsToProfile.Designer.cs">
+      <DependentUpon>201505260735110_AddedInitialsToProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505260736430_AddedFullNameToProfile.cs" />
+    <Compile Include="Migrations\201505260736430_AddedFullNameToProfile.Designer.cs">
+      <DependentUpon>201505260736430_AddedFullNameToProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506081202589_RemovedUnusedFieldsOnRates.cs" />
+    <Compile Include="Migrations\201506081202589_RemovedUnusedFieldsOnRates.Designer.cs">
+      <DependentUpon>201506081202589_RemovedUnusedFieldsOnRates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506081231286_RemovedTimestampFromCoordinate.cs" />
+    <Compile Include="Migrations\201506081231286_RemovedTimestampFromCoordinate.Designer.cs">
+      <DependentUpon>201506081231286_RemovedTimestampFromCoordinate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508181107161_AddedIsViaPointToGPSCoordinate.cs" />
+    <Compile Include="Migrations\201508181107161_AddedIsViaPointToGPSCoordinate.Designer.cs">
+      <DependentUpon>201508181107161_AddedIsViaPointToGPSCoordinate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508241152221_FixMigrations.cs" />
+    <Compile Include="Migrations\201508241152221_FixMigrations.Designer.cs">
+      <DependentUpon>201508241152221_FixMigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511030927403_GPSCoordinateChange.cs" />
+    <Compile Include="Migrations\201511030927403_GPSCoordinateChange.Designer.cs">
+      <DependentUpon>201511030927403_GPSCoordinateChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512181456557_AddedSyncedAtToDriveReport.cs" />
+    <Compile Include="Migrations\201512181456557_AddedSyncedAtToDriveReport.Designer.cs">
+      <DependentUpon>201512181456557_AddedSyncedAtToDriveReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleContext.cs" />
+    <Compile Include="SampleSeedInitializer.cs" />
+    <Compile Include="UnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.DomainModel\Core.DomainModel.csproj">
+      <Project>{b6dabc90-7b3f-4329-b30b-5e33285003f7}</Project>
+      <Name>Core.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.DomainServices\Core.DomainServices.csproj">
+      <Project>{2b159f69-9712-4b07-8858-4e4b212f2228}</Project>
+      <Name>Core.DomainServices</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\MySql.Data.dll" />
+    <Content Include="bin\Debug\mysql.data.entity.EF6.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201505220938450_Initial.resx">
+      <DependentUpon>201505220938450_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505260735110_AddedInitialsToProfile.resx">
+      <DependentUpon>201505260735110_AddedInitialsToProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505260736430_AddedFullNameToProfile.resx">
+      <DependentUpon>201505260736430_AddedFullNameToProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506081202589_RemovedUnusedFieldsOnRates.resx">
+      <DependentUpon>201506081202589_RemovedUnusedFieldsOnRates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506081231286_RemovedTimestampFromCoordinate.resx">
+      <DependentUpon>201506081231286_RemovedTimestampFromCoordinate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508181107161_AddedIsViaPointToGPSCoordinate.resx">
+      <DependentUpon>201508181107161_AddedIsViaPointToGPSCoordinate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508241152221_FixMigrations.resx">
+      <DependentUpon>201508241152221_FixMigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511030927403_GPSCoordinateChange.resx">
+      <DependentUpon>201511030927403_GPSCoordinateChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512181456557_AddedSyncedAtToDriveReport.resx">
+      <DependentUpon>201512181456557_AddedSyncedAtToDriveReport.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
