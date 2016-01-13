@@ -1,0 +1,18 @@
+﻿ [
+        {
+            "Name": "Favrskov",
+            "APIUrl": "https://ework.favrskov.dk/FavrskovMobilityAPI/api",
+            "ImgUrl": "http://www.denstoredanske.dk/@api/deki/files/8935/=39997926.jpg",
+            "TextColor": "#FFFFFF",
+            "PrimaryColor":"#00665F",
+			"SecondaryColor":"#DB813C"
+        },
+        {
+            "Name": "Syddjurs",
+            "APIUrl": "https://os2indberetningmobil.syddjurs.dk/api/",
+            "ImgUrl": "https://www.syddjurs.dk/sites/default/files/vaabenskjold-ikon.png",
+            "TextColor": "#FFFFFF",
+            "PrimaryColor":"#6b2d52",
+            "SecondaryColor":"#6583d3"
+        }
+    ]
