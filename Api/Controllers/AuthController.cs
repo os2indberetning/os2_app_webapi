@@ -44,10 +44,13 @@ namespace Api.Controllers
         // POST api/auth
         public IHttpActionResult Post(AuthRequestViewModel obj)
         {
-            var user = AuthRepo.Get(x => x.UserName == obj.UserName).FirstOrDefault();
+
+            var auth = Encryptor.EncryptAuthRequest(obj);
+
+            var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
 
             if(user == null || user.Password != GetHash(user.Salt, obj.Password))
-                return new CustomErrorActionResult(Request, "Username or password was incorrect", ErrorCodes.TokenNotFound, HttpStatusCode.Unauthorized);
+                return new CustomErrorActionResult(Request, "Username or password is incorrect", ErrorCodes.TokenNotFound, HttpStatusCode.Unauthorized);
 
             var profile = AutoMapper.Mapper.Map<ProfileViewModel>(user.Profile);
             profile = Encryptor.DecryptProfile(profile);

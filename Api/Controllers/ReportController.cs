@@ -5,6 +5,7 @@ using System.Web.Http;
 using Api.Encryption;
 using Api.Models;
 using Core.DomainModel;
+using Core.DomainModel.Model;
 using Core.DomainServices;
 
 namespace Api.Controllers
@@ -14,29 +15,28 @@ namespace Api.Controllers
 
         private IUnitOfWork Uow { get; }
         private IGenericRepository<DriveReport> DriveReportRepo { get; }
-        private IGenericRepository<Token> TokenRepo { get; }
+        private IGenericRepository<UserAuth> AuthRepo { get; }
 
-        public ReportController(IUnitOfWork uow, IGenericRepository<DriveReport> driveReportRepo, IGenericRepository<Token> tokenRepo)
+        public ReportController(IUnitOfWork uow, IGenericRepository<DriveReport> driveReportRepo, IGenericRepository<UserAuth> authRepo)
         {
             Uow = uow;
             DriveReportRepo = driveReportRepo;
-            TokenRepo = tokenRepo;
+            AuthRepo = authRepo;
         }
 
         public class DriveObject
         {
             public DriveReportViewModel DriveReport { get; set; }
-            public TokenViewModel Token { get; set; }
+            public AuthorizationViewModel Auth { get; set; }
         }
 
-
+        // POST /report
         public IHttpActionResult Post(DriveObject driveObject)
         {
-            driveObject.Token = Encryptor.EncryptToken(driveObject.Token);
-            var token = TokenRepo.Get(x => x.GuId == driveObject.Token.GuId && x.Status == 1).FirstOrDefault();
+            var auth = AuthRepo.Get(t => t.GuId == Encryptor.EncryptAuthorization(driveObject.Auth).GuId).FirstOrDefault();
 
-            if (token == null)
-                return new CustomErrorActionResult(Request, "Token not found", ErrorCodes.TokenNotFound,
+            if (auth == null)
+                return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.TokenNotFound,
                     HttpStatusCode.Unauthorized);
 
             try
@@ -52,7 +52,7 @@ namespace Api.Controllers
             }
             catch (Exception)
             {
-                return new CustomErrorActionResult(Request, "Could not save", ErrorCodes.SaveError, HttpStatusCode.BadRequest);
+                return new CustomErrorActionResult(Request, "Could not save drivereport", ErrorCodes.SaveError, HttpStatusCode.BadRequest);
             }
         }
 

@@ -38,6 +38,14 @@ namespace Api.Encryption
             return gpscoord;
         }
 
+        public static AuthorizationViewModel EncryptAuthorization(AuthorizationViewModel auth)
+        {
+            if (auth.GuId != null)
+                auth.GuId = StringCipher.Encrypt(auth.GuId, EncryptKey);
+
+            return auth;
+        }
+
         public static TokenViewModel EncryptToken(TokenViewModel token)
         {
             if (token.GuId != null)
@@ -47,6 +55,14 @@ namespace Api.Encryption
             token.TokenString = StringCipher.Encrypt(token.TokenString, EncryptKey);
 
             return token;
+        }
+
+        public static AuthRequestViewModel EncryptAuthRequest(AuthRequestViewModel auth)
+        {
+            if (auth.UserName != null)
+                auth.UserName = StringCipher.Encrypt(auth.UserName, EncryptKey);
+
+            return auth;
         }
 
         //Decrypt
