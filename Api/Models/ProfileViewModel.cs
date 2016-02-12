@@ -16,6 +16,8 @@ namespace Api.Models
         public string HomeLatitude { get; set; }
         public string HomeLongitude { get; set; }
 
+        public AuthorizationViewModel Authorization { get; set; }
+
         public virtual ICollection<EmploymentViewModel> Employments { get; set; }
         public virtual ICollection<TokenViewModel> Tokens { get; set; }
     }
