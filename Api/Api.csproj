@@ -180,6 +180,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuthorizationViewModel.cs" />
     <Compile Include="Models\AuthRequestViewModel.cs" />
     <Compile Include="Models\EmploymentViewModel.cs" />
     <Compile Include="Models\TokenViewModel.cs" />
