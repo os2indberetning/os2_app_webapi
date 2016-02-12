@@ -33,11 +33,18 @@ namespace Api.Controllers
         // POST /report
         public IHttpActionResult Post(DriveObject driveObject)
         {
-            var auth = AuthRepo.Get(t => t.GuId == Encryptor.EncryptAuthorization(driveObject.Auth).GuId).FirstOrDefault();
-
+            var encryptedGuId = Encryptor.EncryptAuthorization(driveObject.Auth).GuId;
+            var auth = AuthRepo.Get(t => t.GuId == encryptedGuId).FirstOrDefault();
+            
             if (auth == null)
                 return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.TokenNotFound,
                     HttpStatusCode.Unauthorized);
+
+            if(auth.ProfileId != driveObject.DriveReport.ProfileId)
+            {
+                return new CustomErrorActionResult(Request, "Token and user do not match", ErrorCodes.TokenAndUserDoNotMatch,
+                     HttpStatusCode.Unauthorized);
+            }
 
             try
             {

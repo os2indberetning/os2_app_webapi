@@ -10,7 +10,7 @@ namespace Api.Encryption
     public static class Encryptor
     {
 
-        private const string EncryptKey = "putsomethinghere";
+        private const string EncryptKey = "testpasswordkey";
 
         //Encryption
         public static DriveReportViewModel EncryptDriveReport(DriveReportViewModel driveReport)
@@ -42,6 +42,14 @@ namespace Api.Encryption
         {
             if (auth.GuId != null)
                 auth.GuId = StringCipher.Encrypt(auth.GuId, EncryptKey);
+
+            return auth;
+        }
+
+        public static AuthorizationViewModel DecryptAuthorization(AuthorizationViewModel auth)
+        {
+            if (auth.GuId != null)
+                auth.GuId = StringCipher.Decrypt(auth.GuId, EncryptKey);
 
             return auth;
         }
