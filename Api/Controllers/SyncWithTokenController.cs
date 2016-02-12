@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Http;
 using Api.Encryption;
 using Core.DomainModel;
 using Core.DomainServices;
-using AutoMapper;
 using Api.Models;
-using Api.Encryption;
 
 namespace Api.Controllers
 {
