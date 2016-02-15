@@ -12,8 +12,8 @@ namespace Api.Controllers
 {
     public class UserInfoController : ApiController
     {
-        private IGenericRepository<Rate> RateRepo { get; }
-        private IGenericRepository<UserAuth> AuthRepo { get; }
+        private IGenericRepository<Rate> RateRepo { get; set; }
+        private IGenericRepository<UserAuth> AuthRepo { get; set; }
 
         public UserInfoController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo)
         {
@@ -21,8 +21,8 @@ namespace Api.Controllers
             AuthRepo = authRepo;
         }
 
-        // GET api/userinfo
-        public IHttpActionResult Get(AuthorizationViewModel obj)
+        // Post api/userinfo
+        public IHttpActionResult Post(AuthorizationViewModel obj)
         {
             var auth = AuthRepo.Get(t => t.GuId == Encryptor.EncryptAuthorization(obj).GuId).FirstOrDefault();
 
