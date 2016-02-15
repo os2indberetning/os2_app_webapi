@@ -24,7 +24,9 @@ namespace Api.Controllers
         // Post api/userinfo
         public IHttpActionResult Post(AuthorizationViewModel obj)
         {
-            var auth = AuthRepo.Get(t => t.GuId == Encryptor.EncryptAuthorization(obj).GuId).FirstOrDefault();
+            var encryptedGuid = Encryptor.EncryptAuthorization(obj).GuId;
+
+            var auth = AuthRepo.Get(t => t.GuId == encryptedGuid).FirstOrDefault();
 
             if (auth == null)
                 return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.TokenNotFound,
