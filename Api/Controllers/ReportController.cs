@@ -13,9 +13,9 @@ namespace Api.Controllers
     public class ReportController : ApiController
     {
 
-        private IUnitOfWork Uow { get; }
-        private IGenericRepository<DriveReport> DriveReportRepo { get; }
-        private IGenericRepository<UserAuth> AuthRepo { get; }
+        private IUnitOfWork Uow { get; set; }
+        private IGenericRepository<DriveReport> DriveReportRepo { get; set; }
+        private IGenericRepository<UserAuth> AuthRepo { get; set; }
 
         public ReportController(IUnitOfWork uow, IGenericRepository<DriveReport> driveReportRepo, IGenericRepository<UserAuth> authRepo)
         {
@@ -27,13 +27,13 @@ namespace Api.Controllers
         public class DriveObject
         {
             public DriveReportViewModel DriveReport { get; set; }
-            public AuthorizationViewModel Auth { get; set; }
+            public AuthorizationViewModel Authorization { get; set; }
         }
 
         // POST /report
         public IHttpActionResult Post(DriveObject driveObject)
         {
-            var encryptedGuId = Encryptor.EncryptAuthorization(driveObject.Auth).GuId;
+            var encryptedGuId = Encryptor.EncryptAuthorization(driveObject.Authorization).GuId;
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuId).FirstOrDefault();
             
             if (auth == null)

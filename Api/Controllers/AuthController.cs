@@ -16,8 +16,8 @@ namespace Api.Controllers
 {
     public class AuthController : ApiController
     {
-        private IGenericRepository<Rate> RateRepo { get; }
-        private IGenericRepository<UserAuth> AuthRepo { get; }
+        private IGenericRepository<Rate> RateRepo { get; set; }
+        private IGenericRepository<UserAuth> AuthRepo { get; set; }
 
         public AuthController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo)
         {
