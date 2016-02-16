@@ -35,10 +35,12 @@ namespace Api.Controllers
             var profile = AutoMapper.Mapper.Map<ProfileViewModel>(auth.Profile);
             profile = Encryptor.DecryptProfile(profile);
 
-            profile.Authorization = new AuthorizationViewModel
+            var authModel = new AuthorizationViewModel
             {
                 GuId = auth.GuId
             };
+
+            profile.Authorization = Encryptor.DecryptAuthorization(authModel);
 
             var ui = new UserInfoViewModel
             {
