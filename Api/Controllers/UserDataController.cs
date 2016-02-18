@@ -44,7 +44,7 @@ namespace Api.Controllers
             }
             else
             {
-                return new CustomErrorActionResult(Request, "Token not found", ErrorCodes.TokenNotFound, HttpStatusCode.Unauthorized);
+                return new CustomErrorActionResult(Request, "Token not found", ErrorCodes.InvalidAuthorization, HttpStatusCode.Unauthorized);
             }
         }
     }
