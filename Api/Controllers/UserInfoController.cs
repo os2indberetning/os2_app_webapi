@@ -29,7 +29,7 @@ namespace Api.Controllers
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuid).FirstOrDefault();
 
             if (auth == null)
-                return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.TokenNotFound,
+                return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.InvalidAuthorization,
                     HttpStatusCode.Unauthorized);
 
             var profile = AutoMapper.Mapper.Map<ProfileViewModel>(auth.Profile);

@@ -14,13 +14,14 @@ namespace Api.Controllers
     public enum ErrorCodes
     {
         UnknownError = 600,
-        TokenNotFound = 610,
+        InvalidAuthorization = 610,
         TokenAllreadyActivated = 620,
         TokenAllreadyExists = 630,
         SaveError = 640,
         BadPassword = 650,
         UserNotFound = 660,
-        TokenAndUserDoNotMatch = 670
+        ReportAndUserDoNotMatch = 670,
+        IncorrectUserNameOrPassword = 680
     }
 
     public class ErrorObject

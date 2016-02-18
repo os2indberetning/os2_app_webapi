@@ -121,7 +121,7 @@ namespace Api.Controllers
                 }
                 else
                 {
-                    return new CustomErrorActionResult(Request, "Token not found", ErrorCodes.TokenNotFound, HttpStatusCode.BadRequest);
+                    return new CustomErrorActionResult(Request, "Token not found", ErrorCodes.InvalidAuthorization, HttpStatusCode.BadRequest);
                 }
             }
             else

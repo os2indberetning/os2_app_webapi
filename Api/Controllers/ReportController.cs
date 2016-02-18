@@ -37,12 +37,12 @@ namespace Api.Controllers
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuId).FirstOrDefault();
             
             if (auth == null)
-                return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.TokenNotFound,
+                return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.InvalidAuthorization,
                     HttpStatusCode.Unauthorized);
 
             if(auth.ProfileId != driveObject.DriveReport.ProfileId)
             {
-                return new CustomErrorActionResult(Request, "Token and user do not match", ErrorCodes.TokenAndUserDoNotMatch,
+                return new CustomErrorActionResult(Request, "User and drive report user do not match", ErrorCodes.ReportAndUserDoNotMatch,
                      HttpStatusCode.Unauthorized);
             }
 

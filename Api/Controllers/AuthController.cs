@@ -50,7 +50,7 @@ namespace Api.Controllers
             var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
 
             if(user == null || user.Password != GetHash(user.Salt, obj.Password))
-                return new CustomErrorActionResult(Request, "Username or password is incorrect", ErrorCodes.TokenNotFound, HttpStatusCode.Unauthorized);
+                return new CustomErrorActionResult(Request, "Username or password is incorrect", ErrorCodes.IncorrectUserNameOrPassword, HttpStatusCode.Unauthorized);
 
             var profile = AutoMapper.Mapper.Map<ProfileViewModel>(user.Profile);
             profile = Encryptor.DecryptProfile(profile);
