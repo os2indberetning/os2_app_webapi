@@ -28,6 +28,8 @@ namespace Core.DomainModel
         public string HomeLatitude { get; set; }
         public string HomeLongitude { get; set; }
 
+        public bool IsActive { get; set; }
+
         public virtual ICollection<Employment> Employments { get; set; }
         public virtual ICollection<Token> Tokens { get; set; }
         public virtual ICollection<DriveReport> DriveReports { get; set; }
