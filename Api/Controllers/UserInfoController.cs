@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -42,10 +43,12 @@ namespace Api.Controllers
 
             profile.Authorization = Encryptor.DecryptAuthorization(authModel);
 
+            var currentYear = DateTime.Now.Year;
+
             var ui = new UserInfoViewModel
             {
                 profile = profile,
-                rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().ToList())
+                rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString()).ToList())
             };
 
             return Ok(ui);

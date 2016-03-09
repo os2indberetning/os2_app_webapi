@@ -44,15 +44,15 @@ namespace Api.Controllers
         // POST api/auth
         public IHttpActionResult Post(AuthRequestViewModel obj)
         {
-
             var auth = Encryptor.EncryptAuthRequest(obj);
 
             var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
 
-            if(user == null || user.Password != GetHash(user.Salt, obj.Password))
+            if(user == null || user.Password != GetHash(user.Salt, obj.Password) || user.Profile.IsActive == false)
                 return new CustomErrorActionResult(Request, "Username or password is incorrect", ErrorCodes.IncorrectUserNameOrPassword, HttpStatusCode.Unauthorized);
 
             var profile = AutoMapper.Mapper.Map<ProfileViewModel>(user.Profile);
+
             profile = Encryptor.DecryptProfile(profile);
             var authModel = new AuthorizationViewModel
             {
@@ -60,10 +60,12 @@ namespace Api.Controllers
             };
             profile.Authorization = Encryptor.DecryptAuthorization(authModel);
 
+            var currentYear = DateTime.Now.Year;
+
             var ui = new UserInfoViewModel
             {
                 profile = profile,
-                rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().ToList())
+                rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString()).ToList())
             };
 
             return Ok(ui);
