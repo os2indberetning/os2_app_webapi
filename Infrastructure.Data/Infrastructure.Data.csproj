@@ -103,6 +103,10 @@
     <Compile Include="Migrations\201603091238194_AddedIsActiveToProfile.Designer.cs">
       <DependentUpon>201603091238194_AddedIsActiveToProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603111343325_AddedStartAndEndTimeToEmployment.cs" />
+    <Compile Include="Migrations\201603111343325_AddedStartAndEndTimeToEmployment.Designer.cs">
+      <DependentUpon>201603111343325_AddedStartAndEndTimeToEmployment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleContext.cs" />
@@ -162,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603091238194_AddedIsActiveToProfile.resx">
       <DependentUpon>201603091238194_AddedIsActiveToProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603111343325_AddedStartAndEndTimeToEmployment.resx">
+      <DependentUpon>201603111343325_AddedStartAndEndTimeToEmployment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
