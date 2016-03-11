@@ -11,5 +11,7 @@ namespace Api.Models
         public int Id { get; set; }
         public string EmploymentPosition { get; set; }
         public string ManNr { get; set; }
+        public long StartDateTimestamp { get; set; }
+        public long EndDateTimestamp { get; set; }
     }
 }

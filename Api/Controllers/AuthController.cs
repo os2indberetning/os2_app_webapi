@@ -54,11 +54,16 @@ namespace Api.Controllers
             var profile = AutoMapper.Mapper.Map<ProfileViewModel>(user.Profile);
 
             profile = Encryptor.DecryptProfile(profile);
+            var currentTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            profile.Employments = profile.Employments.AsQueryable().Where(x => x.StartDateTimestamp < currentTimestamp && (x.EndDateTimestamp > currentTimestamp || x.EndDateTimestamp == 0)).ToList();
+
             var authModel = new AuthorizationViewModel
             {
                 GuId = user.GuId
             };
             profile.Authorization = Encryptor.DecryptAuthorization(authModel);
+
+
 
             var currentYear = DateTime.Now.Year;
 
