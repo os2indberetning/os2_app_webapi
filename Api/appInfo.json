@@ -1,18 +1,34 @@
-﻿ [
-        {
-            "Name": "Favrskov",
-            "APIUrl": "https://ework.favrskov.dk/FavrskovMobilityAPI/api",
-            "ImgUrl": "http://www.denstoredanske.dk/@api/deki/files/8935/=39997926.jpg",
-            "TextColor": "#FFFFFF",
-            "PrimaryColor":"#00665F",
-			"SecondaryColor":"#DB813C"
-        },
-        {
-            "Name": "Syddjurs",
-            "APIUrl": "https://os2indberetningmobil.syddjurs.dk/api/",
-            "ImgUrl": "https://www.syddjurs.dk/sites/default/files/vaabenskjold-ikon.png",
-            "TextColor": "#FFFFFF",
-            "PrimaryColor":"#6b2d52",
-            "SecondaryColor":"#6583d3"
-        }
-    ]
+ [
+    {
+        "Name": "Favrskov",
+        "APIUrl": "https://ework.favrskov.dk/FavrskovMobilityAPI/api",
+        "ImgUrl": "http://www.denstoredanske.dk/@api/deki/files/8935/=39997926.jpg",
+        "TextColor": "#FFFFFF",
+        "PrimaryColor":"#00665F",
+		"SecondaryColor":"#DB813C"
+    },
+    {
+        "Name": "Syddjurs",
+        "APIUrl": "https://os2indberetningmobil.syddjurs.dk/api/",
+        "ImgUrl": "https://www.syddjurs.dk/sites/default/files/vaabenskjold-ikon.png",
+        "TextColor": "#FFFFFF",
+        "PrimaryColor":"#6b2d52",
+        "SecondaryColor":"#6583d3"
+    },
+    {
+        "Name": "Skanderborg",
+        "APIUrl": "https://eindberetningmobile.skanderborg.dk/api/",
+        "ImgUrl": "https://www.skanderborg.dk/Files/Billeder/eindberetning/skbRinge449.png",
+        "TextColor": "#FFFFFF",
+        "PrimaryColor":"#4b79aa",
+        "SecondaryColor":"#83918A"
+    },
+    {
+        "Name": "Demo",
+        "APIUrl": "https://api.os2indberetning.dk/api/",
+        "ImgUrl": "http://www.os2web.dk/sites/all/themes/liva/images/logo.png",
+        "TextColor": "#FFFFFF",
+        "PrimaryColor":"#538cc6",
+        "SecondaryColor":"#DB813C"
+    }
+]
