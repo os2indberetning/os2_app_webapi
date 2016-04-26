@@ -24,6 +24,14 @@
         "SecondaryColor":"#83918A"
     },
     {
+        "Name": "Mariagerfjord",
+        "APIUrl": "https://koersel.mariagerfjord.dk/api/",
+        "ImgUrl": "http://www.mariagerfjord.dk/images/Mariagerfjord-byv%C3%A5ben.jpg",
+        "TextColor": "#FFFFFF",
+        "PrimaryColor":"#0060A1",
+        "SecondaryColor":"#B3B3B3"
+    },
+    {
         "Name": "Demo",
         "APIUrl": "https://api.os2indberetning.dk/api/",
         "ImgUrl": "http://www.os2web.dk/sites/all/themes/liva/images/logo.png",
