@@ -95,6 +95,18 @@
     <Compile Include="Migrations\201512181456557_AddedSyncedAtToDriveReport.Designer.cs">
       <DependentUpon>201512181456557_AddedSyncedAtToDriveReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602121058271_AddedUserAuth.cs" />
+    <Compile Include="Migrations\201602121058271_AddedUserAuth.Designer.cs">
+      <DependentUpon>201602121058271_AddedUserAuth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603091238194_AddedIsActiveToProfile.cs" />
+    <Compile Include="Migrations\201603091238194_AddedIsActiveToProfile.Designer.cs">
+      <DependentUpon>201603091238194_AddedIsActiveToProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603111343325_AddedStartAndEndTimeToEmployment.cs" />
+    <Compile Include="Migrations\201603111343325_AddedStartAndEndTimeToEmployment.Designer.cs">
+      <DependentUpon>201603111343325_AddedStartAndEndTimeToEmployment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleContext.cs" />
@@ -148,6 +160,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512181456557_AddedSyncedAtToDriveReport.resx">
       <DependentUpon>201512181456557_AddedSyncedAtToDriveReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602121058271_AddedUserAuth.resx">
+      <DependentUpon>201602121058271_AddedUserAuth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603091238194_AddedIsActiveToProfile.resx">
+      <DependentUpon>201603091238194_AddedIsActiveToProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603111343325_AddedStartAndEndTimeToEmployment.resx">
+      <DependentUpon>201603111343325_AddedStartAndEndTimeToEmployment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

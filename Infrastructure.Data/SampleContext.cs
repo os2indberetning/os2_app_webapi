@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Core.DomainModel;
+using Core.DomainModel.Model;
 
 namespace Infrastructure.Data
 {
@@ -19,6 +20,7 @@ namespace Infrastructure.Data
         public IDbSet<Rate> Rates { get; set; }
         public IDbSet<Route> Routes { get; set; }
         public IDbSet<Token> Tokens { get; set; }
+        public IDbSet<UserAuth> UserAuths { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
