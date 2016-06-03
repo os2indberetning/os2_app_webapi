@@ -107,6 +107,10 @@
     <Compile Include="Migrations\201603111343325_AddedStartAndEndTimeToEmployment.Designer.cs">
       <DependentUpon>201603111343325_AddedStartAndEndTimeToEmployment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606031034059_AddedUuidToDriveReport.cs" />
+    <Compile Include="Migrations\201606031034059_AddedUuidToDriveReport.Designer.cs">
+      <DependentUpon>201606031034059_AddedUuidToDriveReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleContext.cs" />
@@ -169,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603111343325_AddedStartAndEndTimeToEmployment.resx">
       <DependentUpon>201603111343325_AddedStartAndEndTimeToEmployment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606031034059_AddedUuidToDriveReport.resx">
+      <DependentUpon>201606031034059_AddedUuidToDriveReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

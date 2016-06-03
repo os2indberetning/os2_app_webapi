@@ -35,7 +35,8 @@ namespace Api.Controllers
         {
             var encryptedGuId = Encryptor.EncryptAuthorization(driveObject.Authorization).GuId;
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuId).FirstOrDefault();
-            
+            var DuplicateReportCheck = DriveReportRepo.Get(t => t.Uuid == driveObject.DriveReport.Uuid).Any();
+
             if (auth == null)
                 return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.InvalidAuthorization,
                     HttpStatusCode.Unauthorized);
@@ -44,6 +45,10 @@ namespace Api.Controllers
             {
                 return new CustomErrorActionResult(Request, "User and drive report user do not match", ErrorCodes.ReportAndUserDoNotMatch,
                      HttpStatusCode.Unauthorized);
+            }
+            if (DuplicateReportCheck)
+            {
+                return new CustomErrorActionResult(Request, "Report rejected, duplicate found", ErrorCodes.DuplicateReportFound, HttpStatusCode.OK);
             }
 
             try

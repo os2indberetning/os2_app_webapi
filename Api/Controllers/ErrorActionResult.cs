@@ -21,7 +21,8 @@ namespace Api.Controllers
         BadPassword = 650,
         UserNotFound = 660,
         ReportAndUserDoNotMatch = 670,
-        IncorrectUserNameOrPassword = 680
+        IncorrectUserNameOrPassword = 680,
+        DuplicateReportFound = 690
     }
 
     public class ErrorObject

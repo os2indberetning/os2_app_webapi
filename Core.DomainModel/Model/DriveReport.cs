@@ -24,6 +24,8 @@ namespace Core.DomainModel
         public int RateId { get; set; }
         //public int RouteId { get; set; }
 
+        public Guid Uuid { get; set; }
+
         public virtual Profile Profile { get; set; }
         public virtual Route Route { get; set; }
         public virtual Rate Rate { get; set; }

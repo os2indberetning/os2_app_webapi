@@ -18,6 +18,8 @@ namespace Api.Models
         public bool EndsAtHome { get; set; }
         public bool StartsAtHome { get; set; }
 
+        public Guid Uuid { get; set; }
+
         public RouteViewModel route { get; set; }
     }
 }
