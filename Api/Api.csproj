@@ -47,7 +47,7 @@
     <WarningLevel>4</WarningLevel>
     <PublishDatabaseSettings>
       <Objects>
-        <ObjectGroup Name="favrskovWebAPI" Order="1">
+        <ObjectGroup Name="favrskovWebAPI" Order="1" Enabled="False">
           <Destination Path="Data Source=10.0.2.18%3bInitial Catalog=FavrskovWebApi%3bPersist Security Info=True%3bUser ID=ITMIND%3bPassword=IT2014minds" />
           <Object Type="DbFullSql" Enabled="True" xmlns="">
             <PreSource Path="Data Source=%28LocalDb%29\v11.0%3bAttachDbFilename=|DataDirectory|\SampleData.mdf%3bInitial Catalog=SampleData%3bIntegrated Security=True" ScriptSchema="True" ScriptData="True" CopyAllFullTextCatalogs="False" DriDefaults="True" />
