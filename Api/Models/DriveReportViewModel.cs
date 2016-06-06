@@ -11,6 +11,7 @@ namespace Api.Models
         public string ManualEntryRemark { get; set; }
         public string Purpose { get; set; }
         public int EmploymentId { get; set; }
+        public bool FourKmRule { get; set; }
 
         public int RateId { get; set; }
         public int ProfileId { get; set; }
