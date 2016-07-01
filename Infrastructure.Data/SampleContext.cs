@@ -16,6 +16,7 @@ namespace Infrastructure.Data
         public IDbSet<DriveReport> DriveReports { get; set; }
         public IDbSet<Employment> Employments { get; set; }
         public IDbSet<GPSCoordinate> GPSCoordinates { get; set; }
+        public IDbSet<OrgUnit> OrgUnits { get; set; }
         public IDbSet<Profile> Profiles { get; set; }
         public IDbSet<Rate> Rates { get; set; }
         public IDbSet<Route> Routes { get; set; }

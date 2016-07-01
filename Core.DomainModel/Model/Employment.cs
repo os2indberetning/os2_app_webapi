@@ -20,5 +20,7 @@ namespace Core.DomainModel
         public virtual Profile Profile { get; set; }
         public long StartDateTimestamp { get; set; }
         public long EndDateTimestamp { get; set; }
+
+        public int OrgUnitId { get; set; }
     }
 }
