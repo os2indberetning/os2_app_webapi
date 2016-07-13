@@ -25,19 +25,7 @@ namespace Api.Controllers
         // Post api/userinfo
         public IHttpActionResult Post(AuthorizationViewModel obj)
         {
-            //test
-            var currentYear2 = DateTime.Now.Year;
-
-            var ui2 = new UserInfoViewModel
-            {
-                profile = null,
-                rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear2.ToString() && x.isActive).ToList())
-            };
-
-            return Ok(ui2);
-
-            //test slut
-
+           
             var encryptedGuid = Encryptor.EncryptAuthorization(obj).GuId;
 
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuid).FirstOrDefault();
@@ -63,7 +51,7 @@ namespace Api.Controllers
             var ui = new UserInfoViewModel
             {
                 profile = profile,
-                rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString()).ToList())
+                rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString() && x.isActive).ToList())
             };
 
             return Ok(ui);

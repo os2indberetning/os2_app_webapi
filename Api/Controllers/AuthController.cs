@@ -71,7 +71,7 @@ namespace Api.Controllers
             var ui = new UserInfoViewModel
             {
                 profile = profile,
-                rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString()).ToList())
+                rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString() && x.isActive).ToList())
             };
 
             return Ok(ui);

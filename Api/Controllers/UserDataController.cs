@@ -40,7 +40,7 @@ namespace Api.Controllers
 
                 UserInfoViewModel ui = new UserInfoViewModel();
                 ui.profile = profile;
-                ui.rates = AutoMapper.Mapper.Map <List<RateViewModel>> (_rateRepo.Get().ToList());
+                ui.rates = AutoMapper.Mapper.Map <List<RateViewModel>> (_rateRepo.Get().Where(x=> x.isActive).ToList());
 
                 return Ok(ui);
             }
