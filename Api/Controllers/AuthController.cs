@@ -44,6 +44,7 @@ namespace Api.Controllers
         // POST api/auth
         public IHttpActionResult Post(AuthRequestViewModel obj)
         {
+            
             var auth = Encryptor.EncryptAuthRequest(obj);
 
             var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
