@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.DomainModel.Model
+namespace Core.DomainModel
 {
     public class OrgUnit
     {

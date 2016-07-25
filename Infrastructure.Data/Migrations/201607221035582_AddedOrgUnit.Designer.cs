@@ -7,13 +7,13 @@ namespace Infrastructure.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class OrgUnitAdded : IMigrationMetadata
+    public sealed partial class AddedOrgUnit : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(OrgUnitAdded));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedOrgUnit));
         
         string IMigrationMetadata.Id
         {
-            get { return "201607011101533_OrgUnitAdded"; }
+            get { return "201607221035582_AddedOrgUnit"; }
         }
         
         string IMigrationMetadata.Source

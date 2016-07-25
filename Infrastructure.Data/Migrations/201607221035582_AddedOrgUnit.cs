@@ -3,7 +3,7 @@ namespace Infrastructure.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class OrgUnitAdded : DbMigration
+    public partial class AddedOrgUnit : DbMigration
     {
         public override void Up()
         {
@@ -18,10 +18,14 @@ namespace Infrastructure.Data.Migrations
                 .PrimaryKey(t => t.Id)                ;
             
             AddColumn("Employments", "OrgUnitId", c => c.Int(nullable: false));
+            CreateIndex("Employments", "OrgUnitId");
+            AddForeignKey("Employments", "OrgUnitId", "OrgUnits", "Id", cascadeDelete: true);
         }
         
         public override void Down()
         {
+            DropForeignKey("Employments", "OrgUnitId", "OrgUnits");
+            DropIndex("Employments", new[] { "OrgUnitId" });
             DropColumn("Employments", "OrgUnitId");
             DropTable("OrgUnits");
         }
