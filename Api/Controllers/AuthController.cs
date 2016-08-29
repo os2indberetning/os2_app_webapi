@@ -11,6 +11,7 @@ using Api.Models;
 using Core.DomainModel;
 using Core.DomainModel.Model;
 using Core.DomainServices;
+using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {
@@ -18,6 +19,7 @@ namespace Api.Controllers
     {
         private IGenericRepository<Rate> RateRepo { get; set; }
         private IGenericRepository<UserAuth> AuthRepo { get; set; }
+       
 
         public AuthController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo)
         {
@@ -44,14 +46,17 @@ namespace Api.Controllers
         // POST api/auth
         public IHttpActionResult Post(AuthRequestViewModel obj)
         {
-            
+            ILogger _logger = new Logger();
+            _logger.Log("Post api/auth. Object AuthRequestViewModel initial: pw" + obj.Password + "user" + obj.UserName, "api",3);
             var auth = Encryptor.EncryptAuthRequest(obj);
 
             var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
 
-            if(user == null || user.Password != GetHash(user.Salt, obj.Password) || user.Profile.IsActive == false)
+            if (user == null || user.Password != GetHash(user.Salt, obj.Password) || user.Profile.IsActive == false)
+            {
+                _logger.Log("Post api/auth. Username or password is incorrect: User: " + user, "api", 3);
                 return new CustomErrorActionResult(Request, "Username or password is incorrect", ErrorCodes.IncorrectUserNameOrPassword, HttpStatusCode.Unauthorized);
-
+            }
             var profile = AutoMapper.Mapper.Map<ProfileViewModel>(user.Profile);
 
             profile = Encryptor.DecryptProfile(profile);
@@ -63,9 +68,7 @@ namespace Api.Controllers
                 GuId = user.GuId
             };
             profile.Authorization = Encryptor.DecryptAuthorization(authModel);
-
-
-
+            
             var currentYear = DateTime.Now.Year;
 
             var ui = new UserInfoViewModel
@@ -73,7 +76,7 @@ namespace Api.Controllers
                 profile = profile,
                 rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString() && x.isActive).ToList())
             };
-
+            _logger.Log("Post api/auth. Before Ok. profile: " + ui.profile + " rates: " + ui.rates, "api", 3);
             return Ok(ui);
         }
 

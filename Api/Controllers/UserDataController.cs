@@ -9,6 +9,7 @@ using Core.DomainServices;
 using AutoMapper;
 using Api.Models;
 using Api.Encryption;
+using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {   
@@ -17,6 +18,7 @@ namespace Api.Controllers
         private IUnitOfWork _uow { get; set; }
         private IGenericRepository<Rate> _rateRepo{ get; set; }
         private IGenericRepository<Token> _tokenRepo { get; set; }
+        
 
         public UserDataController(IUnitOfWork uow, IGenericRepository<Rate> rateRepo, IGenericRepository<Token> tokenRepo)
         {
@@ -28,6 +30,8 @@ namespace Api.Controllers
         // POST api/userdata
         public IHttpActionResult Post(TokenViewModel obj)
         {
+            ILogger _logger = new Logger();
+            _logger.Log("Post api/userdata. Object TokenViewModel initial: " + obj.TokenString, "api", 3);
             obj = Encryptor.EncryptToken(obj);
             Token token = _tokenRepo.Get(t => t.GuId == obj.GuId && t.Status == 1).FirstOrDefault();
 
@@ -42,10 +46,12 @@ namespace Api.Controllers
                 ui.profile = profile;
                 ui.rates = AutoMapper.Mapper.Map <List<RateViewModel>> (_rateRepo.Get().Where(x=> x.isActive).ToList());
 
+                _logger.Log("Post api/userdata. Before ok: ", "api", 3);
                 return Ok(ui);
             }
             else
             {
+                _logger.Log("Post api/userdata. Error: Token not found ", "api", 3);
                 return new CustomErrorActionResult(Request, "Token not found", ErrorCodes.InvalidAuthorization, HttpStatusCode.Unauthorized);
             }
         }
