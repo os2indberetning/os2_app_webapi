@@ -200,7 +200,7 @@
     <Content Include="appInfo.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Properties\PublishProfiles\api webdeploy test.pubxml" />
+    <None Include="Properties\PublishProfiles\TEST - Api.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

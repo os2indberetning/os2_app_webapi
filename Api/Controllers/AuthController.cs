@@ -19,7 +19,7 @@ namespace Api.Controllers
     {
         private IGenericRepository<Rate> RateRepo { get; set; }
         private IGenericRepository<UserAuth> AuthRepo { get; set; }
-       
+
 
         public AuthController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo)
         {
@@ -47,37 +47,48 @@ namespace Api.Controllers
         public IHttpActionResult Post(AuthRequestViewModel obj)
         {
             ILogger _logger = new Logger();
-            _logger.Log("Post api/auth. Object AuthRequestViewModel initial: pw" + obj.Password + "user" + obj.UserName, "api",3);
-            var auth = Encryptor.EncryptAuthRequest(obj);
-
-            var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
-
-            if (user == null || user.Password != GetHash(user.Salt, obj.Password) || user.Profile.IsActive == false)
+            try
             {
-                _logger.Log("Post api/auth. Username or password is incorrect: User: " + user, "api", 3);
-                return new CustomErrorActionResult(Request, "Username or password is incorrect", ErrorCodes.IncorrectUserNameOrPassword, HttpStatusCode.Unauthorized);
+                _logger.Log("Post api/auth. Object AuthRequestViewModel initial: pw" + obj.Password + "user" + obj.UserName, "api", 3);
+                var auth = Encryptor.EncryptAuthRequest(obj);
+
+                var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
+
+                if (user == null || user.Password != GetHash(user.Salt, obj.Password) || user.Profile.IsActive == false)
+                {
+                    _logger.Log("Post api/auth. Username or password is incorrect: User: " + user, "api", 3);
+                    return new CustomErrorActionResult(Request, "Username or password is incorrect", ErrorCodes.IncorrectUserNameOrPassword, HttpStatusCode.Unauthorized);
+                }
+                var profile = AutoMapper.Mapper.Map<ProfileViewModel>(user.Profile);
+
+                profile = Encryptor.DecryptProfile(profile);
+                var currentTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                profile.Employments = profile.Employments.AsQueryable().Where(x => x.StartDateTimestamp < currentTimestamp && (x.EndDateTimestamp > currentTimestamp || x.EndDateTimestamp == 0)).ToList();
+
+                var authModel = new AuthorizationViewModel
+                {
+                    GuId = user.GuId
+                };
+                profile.Authorization = Encryptor.DecryptAuthorization(authModel);
+
+                var currentYear = DateTime.Now.Year;
+
+                var ui = new UserInfoViewModel
+                {
+                    profile = profile,
+                    rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString() && x.isActive).ToList())
+                };
+                _logger.Log("Post api/auth. Before Ok. profile: " + ui.profile + " rates: " + ui.rates, "api", 3);
+                return Ok(ui);
             }
-            var profile = AutoMapper.Mapper.Map<ProfileViewModel>(user.Profile);
-
-            profile = Encryptor.DecryptProfile(profile);
-            var currentTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            profile.Employments = profile.Employments.AsQueryable().Where(x => x.StartDateTimestamp < currentTimestamp && (x.EndDateTimestamp > currentTimestamp || x.EndDateTimestamp == 0)).ToList();
-
-            var authModel = new AuthorizationViewModel
+            catch (Exception e)
             {
-                GuId = user.GuId
-            };
-            profile.Authorization = Encryptor.DecryptAuthorization(authModel);
-            
-            var currentYear = DateTime.Now.Year;
-
-            var ui = new UserInfoViewModel
-            {
-                profile = profile,
-                rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString() && x.isActive).ToList())
-            };
-            _logger.Log("Post api/auth. Before Ok. profile: " + ui.profile + " rates: " + ui.rates, "api", 3);
-            return Ok(ui);
+                _logger.Log("Post api/auth. Exception message: " + e.Message, "api", 3);
+                _logger.Log("Post api/auth. Exception stack trace: " + e.StackTrace, "api", 3);
+                _logger.Log("Post api/auth. InnerException stack trace: " + e.InnerException.Message, "api", 3);
+                _logger.Log("Post api/auth. InnerException stack trace: " + e.InnerException.StackTrace, "api", 3);
+                throw;
+            }
         }
 
     }
