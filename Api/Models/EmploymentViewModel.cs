@@ -13,5 +13,7 @@ namespace Api.Models
         public string ManNr { get; set; }
         public long StartDateTimestamp { get; set; }
         public long EndDateTimestamp { get; set; }
+
+        public OrgUnitViewModel OrgUnit { get; set; }
     }
 }

@@ -15,6 +15,8 @@ namespace Core.DomainModel
         public string Date { get; set; }
         public string ManualEntryRemark { get; set; }
         public string Purpose { get; set; }
+        public bool FourKmRule { get; set; }
+        public double HomeToBorderDistance { get; set; }
         public bool StartsAtHome { get; set; }
         public bool EndsAtHome { get; set; }
         public long? SyncedAt { get; set; }

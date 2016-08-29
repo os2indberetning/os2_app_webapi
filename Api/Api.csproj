@@ -184,6 +184,7 @@
     <Compile Include="Models\AuthorizationViewModel.cs" />
     <Compile Include="Models\AuthRequestViewModel.cs" />
     <Compile Include="Models\EmploymentViewModel.cs" />
+    <Compile Include="Models\OrgUnitViewModel.cs" />
     <Compile Include="Models\TokenViewModel.cs" />
     <Compile Include="Models\RouteViewModel.cs" />
     <Compile Include="Models\GPSCoordinateViewModel.cs" />
@@ -199,6 +200,7 @@
     <Content Include="appInfo.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\api webdeploy test.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -209,7 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.ApplicationServices\Core.ApplicationServices.csproj">
