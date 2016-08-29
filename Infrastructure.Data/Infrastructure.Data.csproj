@@ -119,9 +119,13 @@
     <Compile Include="Migrations\201606061147063_AddedFourKmRuleToDriveReport.Designer.cs">
       <DependentUpon>201606061147063_AddedFourKmRuleToDriveReport.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607130839154_Added_isActive_To_Rate.cs" />
-    <Compile Include="Migrations\201607130839154_Added_isActive_To_Rate.Designer.cs">
-      <DependentUpon>201607130839154_Added_isActive_To_Rate.cs</DependentUpon>
+    <Compile Include="Migrations\201607221035582_AddedOrgUnit.cs" />
+    <Compile Include="Migrations\201607221035582_AddedOrgUnit.Designer.cs">
+      <DependentUpon>201607221035582_AddedOrgUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608221337250_HomeToBorderDistanceAddedToDriveReport.cs" />
+    <Compile Include="Migrations\201608221337250_HomeToBorderDistanceAddedToDriveReport.Designer.cs">
+      <DependentUpon>201608221337250_HomeToBorderDistanceAddedToDriveReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -195,8 +199,11 @@
     <EmbeddedResource Include="Migrations\201606061147063_AddedFourKmRuleToDriveReport.resx">
       <DependentUpon>201606061147063_AddedFourKmRuleToDriveReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607130839154_Added_isActive_To_Rate.resx">
-      <DependentUpon>201607130839154_Added_isActive_To_Rate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607221035582_AddedOrgUnit.resx">
+      <DependentUpon>201607221035582_AddedOrgUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608221337250_HomeToBorderDistanceAddedToDriveReport.resx">
+      <DependentUpon>201608221337250_HomeToBorderDistanceAddedToDriveReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -184,6 +184,7 @@
     <Compile Include="Models\AuthorizationViewModel.cs" />
     <Compile Include="Models\AuthRequestViewModel.cs" />
     <Compile Include="Models\EmploymentViewModel.cs" />
+    <Compile Include="Models\OrgUnitViewModel.cs" />
     <Compile Include="Models\TokenViewModel.cs" />
     <Compile Include="Models\RouteViewModel.cs" />
     <Compile Include="Models\GPSCoordinateViewModel.cs" />
