@@ -123,6 +123,10 @@
     <Compile Include="Migrations\201607221035582_AddedOrgUnit.Designer.cs">
       <DependentUpon>201607221035582_AddedOrgUnit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608221337250_HomeToBorderDistanceAddedToDriveReport.cs" />
+    <Compile Include="Migrations\201608221337250_HomeToBorderDistanceAddedToDriveReport.Designer.cs">
+      <DependentUpon>201608221337250_HomeToBorderDistanceAddedToDriveReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleContext.cs" />
@@ -197,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607221035582_AddedOrgUnit.resx">
       <DependentUpon>201607221035582_AddedOrgUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608221337250_HomeToBorderDistanceAddedToDriveReport.resx">
+      <DependentUpon>201608221337250_HomeToBorderDistanceAddedToDriveReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
