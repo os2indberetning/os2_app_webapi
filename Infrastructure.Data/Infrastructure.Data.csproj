@@ -131,10 +131,6 @@
     <Compile Include="Migrations\201608290922035_IsActiveAddedToRates.Designer.cs">
       <DependentUpon>201608290922035_IsActiveAddedToRates.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610051048396_AlteredOrgUnitIdOnEmployment.cs" />
-    <Compile Include="Migrations\201610051048396_AlteredOrgUnitIdOnEmployment.Designer.cs">
-      <DependentUpon>201610051048396_AlteredOrgUnitIdOnEmployment.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleContext.cs" />
@@ -215,9 +211,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608290922035_IsActiveAddedToRates.resx">
       <DependentUpon>201608290922035_IsActiveAddedToRates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610051048396_AlteredOrgUnitIdOnEmployment.resx">
-      <DependentUpon>201610051048396_AlteredOrgUnitIdOnEmployment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
