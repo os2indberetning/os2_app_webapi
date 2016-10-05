@@ -17,7 +17,7 @@ namespace Infrastructure.Data.Migrations
                     })
                 .PrimaryKey(t => t.Id)                ;
             
-            AddColumn("Employments", "OrgUnitId", c => c.Int());
+            AddColumn("Employments", "OrgUnitId", c => c.Int(nullable: false));
             CreateIndex("Employments", "OrgUnitId");
             AddForeignKey("Employments", "OrgUnitId", "OrgUnits", "Id", cascadeDelete: true);
         }
