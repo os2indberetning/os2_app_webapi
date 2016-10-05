@@ -21,7 +21,7 @@ namespace Core.DomainModel
         public long StartDateTimestamp { get; set; }
         public long EndDateTimestamp { get; set; }
 
-        public int OrgUnitId { get; set; }
+        public int? OrgUnitId { get; set; }
         public virtual OrgUnit OrgUnit { get; set; }
     }
 }
