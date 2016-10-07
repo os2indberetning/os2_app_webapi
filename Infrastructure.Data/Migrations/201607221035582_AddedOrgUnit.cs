@@ -11,15 +11,17 @@ namespace Infrastructure.Data.Migrations
                 "OrgUnits",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false),
                         OrgId = c.Int(nullable: false),
                         FourKmRuleAllowed = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)                ;
-            
-            AddColumn("Employments", "OrgUnitId", c => c.Int(nullable: false));
+            //TODO: Make dummy orgunit with id = 1
+            Sql("INSERT INTO OrgUnits VALUES(1, 1, 0);");
+            AddColumn("Employments", "OrgUnitId", c => c.Int(nullable: false, defaultValue: 1)); //TODO: Set default to 1
             CreateIndex("Employments", "OrgUnitId");
             AddForeignKey("Employments", "OrgUnitId", "OrgUnits", "Id", cascadeDelete: true);
+            
         }
         
         public override void Down()
