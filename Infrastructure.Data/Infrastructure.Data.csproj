@@ -119,17 +119,9 @@
     <Compile Include="Migrations\201606061147063_AddedFourKmRuleToDriveReport.Designer.cs">
       <DependentUpon>201606061147063_AddedFourKmRuleToDriveReport.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607221035582_AddedOrgUnit.cs" />
-    <Compile Include="Migrations\201607221035582_AddedOrgUnit.Designer.cs">
-      <DependentUpon>201607221035582_AddedOrgUnit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608221337250_HomeToBorderDistanceAddedToDriveReport.cs" />
-    <Compile Include="Migrations\201608221337250_HomeToBorderDistanceAddedToDriveReport.Designer.cs">
-      <DependentUpon>201608221337250_HomeToBorderDistanceAddedToDriveReport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608290922035_IsActiveAddedToRates.cs" />
-    <Compile Include="Migrations\201608290922035_IsActiveAddedToRates.Designer.cs">
-      <DependentUpon>201608290922035_IsActiveAddedToRates.cs</DependentUpon>
+    <Compile Include="Migrations\201610071016055_OrgUnitAdded.cs" />
+    <Compile Include="Migrations\201610071016055_OrgUnitAdded.Designer.cs">
+      <DependentUpon>201610071016055_OrgUnitAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -203,14 +195,8 @@
     <EmbeddedResource Include="Migrations\201606061147063_AddedFourKmRuleToDriveReport.resx">
       <DependentUpon>201606061147063_AddedFourKmRuleToDriveReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607221035582_AddedOrgUnit.resx">
-      <DependentUpon>201607221035582_AddedOrgUnit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608221337250_HomeToBorderDistanceAddedToDriveReport.resx">
-      <DependentUpon>201608221337250_HomeToBorderDistanceAddedToDriveReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608290922035_IsActiveAddedToRates.resx">
-      <DependentUpon>201608290922035_IsActiveAddedToRates.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610071016055_OrgUnitAdded.resx">
+      <DependentUpon>201610071016055_OrgUnitAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

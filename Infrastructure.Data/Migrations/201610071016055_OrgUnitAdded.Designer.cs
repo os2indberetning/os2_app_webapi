@@ -7,13 +7,13 @@ namespace Infrastructure.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class HomeToBorderDistanceAddedToDriveReport : IMigrationMetadata
+    public sealed partial class OrgUnitAdded : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(HomeToBorderDistanceAddedToDriveReport));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(OrgUnitAdded));
         
         string IMigrationMetadata.Id
         {
-            get { return "201608221337250_HomeToBorderDistanceAddedToDriveReport"; }
+            get { return "201610071016055_OrgUnitAdded"; }
         }
         
         string IMigrationMetadata.Source
