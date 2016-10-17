@@ -55,7 +55,7 @@ namespace Api.Controllers
             }
             if (DuplicateReportCheck)
             {
-                _logger.Log("Post /report. Report rejected, duplicate found", "api", 3);
+                _logger.Log($"Post /report. Report rejected, duplicate found. Drivereport uuid: {driveObject.DriveReport.Uuid}", "api", 3);
                 return new CustomErrorActionResult(Request, "Report rejected, duplicate found", ErrorCodes.DuplicateReportFound, HttpStatusCode.OK);
             }
 
@@ -73,7 +73,7 @@ namespace Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Log("Post /report. Exception Could not save drivereport: " + ex.Message, "api", 3);
+                _logger.Log($"Post /report. Exception Could not save drivereport (uuid: {driveObject.DriveReport.Uuid}): " + ex.Message, "api", 3);
                 return new CustomErrorActionResult(Request, "Could not save drivereport", ErrorCodes.SaveError, HttpStatusCode.BadRequest);
             }
         }
