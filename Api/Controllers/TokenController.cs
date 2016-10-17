@@ -9,6 +9,7 @@ using Core.DomainServices;
 using AutoMapper;
 using Api.Models;
 using Api.Encryption;
+using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {
@@ -44,6 +45,8 @@ namespace Api.Controllers
         // POST new token from main server
         public IHttpActionResult Post(tmpCreateToken obj)
         {
+            ILogger _logger = new Logger();
+            _logger.Log("Post TokenController. Object tmpCreateToken initial: " + obj.Token, "api", 3);
             if (obj.Password == PasswordString)
             {
                 Core.DomainModel.Profile profile = _profileRepo.Get(x => x.Id == obj.ProfileId).FirstOrDefault();
@@ -69,26 +72,30 @@ namespace Api.Controllers
                         {
                             _tokenRepo.Insert(mToken);
                             _uow.Save();
-
+                            _logger.Log("Post TokenController. Before OK: ", "api", 3);
                             return Ok();
                         }
                         catch (Exception ex)
                         {
+                            _logger.Log("Post TokenController. Save error. Exception: " + ex.Message, "api", 3);
                             return new CustomErrorActionResult(Request, "Save Error", ErrorCodes.SaveError,HttpStatusCode.BadRequest);
                         }
                     }
                     else
                     {
+                        _logger.Log("Post TokenController. Error: Token already exists ", "api", 3);
                         return new CustomErrorActionResult(Request, "Token allready exists", ErrorCodes.TokenAllreadyExists, HttpStatusCode.BadRequest);
                     }
                 }
                 else
                 {
+                    _logger.Log("Post TokenController. Error: User not found", "api", 3);
                     return new CustomErrorActionResult(Request, "User not found", ErrorCodes.UserNotFound, HttpStatusCode.BadRequest);
                 }
             }
             else
             {
+                _logger.Log("Post TokenController. Error: Wrong password. Password: " + obj.Password, "api", 3);
                 return new CustomErrorActionResult(Request, "Wrong Password", ErrorCodes.BadPassword, HttpStatusCode.Unauthorized);
             }
         }
@@ -96,6 +103,8 @@ namespace Api.Controllers
         // Delete token from main server
         public IHttpActionResult Delete(tmpDeleteToken obj)
         {
+            ILogger _logger = new Logger();
+            _logger.Log("Delete TokenController. Object tmpDeleteToken initial: " + obj, "api", 3);
             if (obj.Password == PasswordString)
             {
                 TokenViewModel tvm = new TokenViewModel();
@@ -111,21 +120,24 @@ namespace Api.Controllers
                     try
                     {
                         _uow.Save();
-
+                        _logger.Log("Delete TokenController. Before OK: ", "api", 3);
                         return Ok();
                     }
                     catch (Exception ex)
                     {
+                        _logger.Log("Delete TokenController. Save error. Exception: " + ex.Message, "api", 3);
                         return new CustomErrorActionResult(Request, "Save Error", ErrorCodes.SaveError, HttpStatusCode.BadRequest);
                     }
                 }
                 else
                 {
+                    _logger.Log("Delete TokenController. Error: Token not found ", "api", 3);
                     return new CustomErrorActionResult(Request, "Token not found", ErrorCodes.InvalidAuthorization, HttpStatusCode.BadRequest);
                 }
             }
             else
             {
+                _logger.Log("Delete TokenController. Error: Wrong password. Password: " + obj.Password, "api", 3);
                 return new CustomErrorActionResult(Request, "Wrong Password", ErrorCodes.BadPassword, HttpStatusCode.Unauthorized);
             }
         }

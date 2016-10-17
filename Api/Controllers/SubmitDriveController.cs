@@ -9,6 +9,7 @@ using Core.DomainServices;
 using AutoMapper;
 using Api.Models;
 using Api.Encryption;
+using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {
@@ -18,6 +19,7 @@ namespace Api.Controllers
         private IGenericRepository<DriveReport> _driveReportRepo { get; set; }
         private IGenericRepository<Token> _tokenRepo { get; set; }
         private IGenericRepository<Rate> _rateRepo { get; set; }
+        
 
         public SubmitDriveController(IUnitOfWork uow, IGenericRepository<Rate> rateRepo, IGenericRepository<DriveReport> driveReportRepo, IGenericRepository<Token> tokenRepo)
         {
@@ -35,6 +37,9 @@ namespace Api.Controllers
 
         public IHttpActionResult Post(DriveObject driveObject)
         {
+            ILogger _logger = new Logger();
+            
+            _logger.Log("Post /submitDriveController. Object DriveObject token initial: " + driveObject.Token, "api", 3);
             driveObject.Token = Encryptor.EncryptToken(driveObject.Token);
             Token token = _tokenRepo.Get(x => x.GuId == driveObject.Token.GuId && x.Status == 1).FirstOrDefault();
 
@@ -56,18 +61,21 @@ namespace Api.Controllers
 
                     UserInfoViewModel ui = new UserInfoViewModel();
                     ui.profile = profile;
-                    ui.rates = AutoMapper.Mapper.Map<List<RateViewModel>>(_rateRepo.Get().ToList());
+                    ui.rates = AutoMapper.Mapper.Map<List<RateViewModel>>(_rateRepo.Get().Where(x=> x.isActive).ToList());
 
+                    _logger.Log("Post /submitDriveController. Before OK: ", "api", 3);
                     return Ok(ui);
                 }
                 catch (Exception ex)
                 {
+                    _logger.Log("Post /submitDriveController. Exception: Could not save: " + ex.Message, "api", 3);
                     return new CustomErrorActionResult(Request, "Could not save", ErrorCodes.SaveError, HttpStatusCode.BadRequest);
                 }
 
             }
             else
             {
+                _logger.Log("Post /submitDriveController. Error: Token not found ", "api", 3);
                 return new CustomErrorActionResult(Request, "Token not found", ErrorCodes.InvalidAuthorization, HttpStatusCode.Unauthorized);
             }
         }

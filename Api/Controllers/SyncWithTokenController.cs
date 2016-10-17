@@ -6,6 +6,7 @@ using Api.Encryption;
 using Core.DomainModel;
 using Core.DomainServices;
 using Api.Models;
+using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {
@@ -15,6 +16,7 @@ namespace Api.Controllers
         private IGenericRepository<Core.DomainModel.Profile> _profileRepo { get; set; }
         private IGenericRepository<Token> _tokenRepo { get; set; }
         private IGenericRepository<Rate> _rateRepo { get; set; }
+        
 
         public SyncWithTokenController(IUnitOfWork uow, IGenericRepository<Rate> rateRepo, IGenericRepository<Core.DomainModel.Profile> profileRepo, IGenericRepository<Token> tokenRepo)
         {
@@ -27,6 +29,8 @@ namespace Api.Controllers
         // POST api/userdata
         public IHttpActionResult Post(TokenViewModel obj)
         {
+            ILogger _logger = new Logger();
+            _logger.Log("Post api/userdata. Object Token initial: " + obj.TokenString, "api", 3);
             obj = Encryptor.EncryptToken(obj);
 
             //Confirm link with token
@@ -50,16 +54,17 @@ namespace Api.Controllers
                         UserInfoViewModel ui = new UserInfoViewModel();
                         ui.profile = profile;
                         ui.rates = AutoMapper.Mapper.Map<List<RateViewModel>>(_rateRepo.Get().ToList());
-
+                        _logger.Log("Post api/userdata before OK. Token: " + token, "api", 3);
                         return Ok(ui);
                     }
                 }
-
+                _logger.Log("Post api/userdata. Error: Token already used ", "api", 3);
                 return new CustomErrorActionResult(Request, "Token allready used", ErrorCodes.TokenAllreadyActivated, HttpStatusCode.BadRequest);
                 
             }
             else
             {
+                _logger.Log("Post api/userdata. Error: Token not found", "api", 3);
                 return new CustomErrorActionResult(Request,"Token not found", ErrorCodes.InvalidAuthorization, HttpStatusCode.Unauthorized);
             }
         }

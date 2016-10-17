@@ -18,6 +18,8 @@ namespace Api.App_Start
             Mapper.CreateMap<GPSCoordinateModel, GPSCoordinate>();
 
             Mapper.CreateMap<Core.DomainModel.Profile, ProfileViewModel>();
+
+            Mapper.CreateMap<OrgUnit, OrgUnitViewModel>();
         }
     }
 }

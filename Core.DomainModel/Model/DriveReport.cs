@@ -15,6 +15,8 @@ namespace Core.DomainModel
         public string Date { get; set; }
         public string ManualEntryRemark { get; set; }
         public string Purpose { get; set; }
+        public bool FourKmRule { get; set; }
+        public double HomeToBorderDistance { get; set; }
         public bool StartsAtHome { get; set; }
         public bool EndsAtHome { get; set; }
         public long? SyncedAt { get; set; }
@@ -23,6 +25,8 @@ namespace Core.DomainModel
         public int ProfileId { get; set; }
         public int RateId { get; set; }
         //public int RouteId { get; set; }
+
+        public string Uuid { get; set; }
 
         public virtual Profile Profile { get; set; }
         public virtual Route Route { get; set; }

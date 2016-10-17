@@ -18,6 +18,7 @@ namespace Core.DomainModel
         public int Id { get; set; }
         public String Description { get; set; }
         public String Year { get; set; }
+        public bool isActive { get; set; }
 
         public virtual ICollection<DriveReport> DriveReports { get; set; }
     }
