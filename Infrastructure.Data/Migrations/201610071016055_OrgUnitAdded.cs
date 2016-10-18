@@ -17,8 +17,8 @@ namespace Infrastructure.Data.Migrations
                     })
                 .PrimaryKey(t => t.Id)                ;
             Sql("INSERT INTO OrgUnits VALUES(1,1,0);"); //Insert dummy orgunit to handle default values in new column on Employment until real data is added when DMZSync runs.
-            AddColumn("DriveReports", "HomeToBorderDistance", c => c.Double(nullable: false, defaultValueSql: "1"));
-            AddColumn("Employments", "OrgUnitId", c => c.Int(nullable: false));
+            AddColumn("DriveReports", "HomeToBorderDistance", c => c.Double(nullable: false));
+            AddColumn("Employments", "OrgUnitId", c => c.Int(nullable: false, defaultValueSql: "1"));
             AddColumn("Rates", "isActive", c => c.Boolean(nullable: false));
             CreateIndex("Employments", "OrgUnitId");
             AddForeignKey("Employments", "OrgUnitId", "OrgUnits", "Id", cascadeDelete: true);
