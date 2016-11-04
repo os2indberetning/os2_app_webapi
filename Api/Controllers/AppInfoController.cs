@@ -26,7 +26,7 @@ namespace Api.Controllers
                System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + "appInfo.json");
             
             var jsonObject = JsonConvert.DeserializeObject(allText);
-            _logger.Log("api/appinfo before. json: " + jsonObject, "api", 3);
+            _logger.Log("api/appinfo before", "api", 3);
             return jsonObject;
         }
     }
