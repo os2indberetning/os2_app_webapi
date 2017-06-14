@@ -111,5 +111,10 @@ namespace Api.Encryption
             token.TokenString = StringCipher.Decrypt(token.TokenString, EncryptKey);
             return token;
         }
+
+        public static string DecryptUserName(string username)
+        {
+            return StringCipher.Decrypt(username, EncryptKey);
+        }
     }
 }

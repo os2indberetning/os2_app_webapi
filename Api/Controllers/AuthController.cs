@@ -50,9 +50,10 @@ namespace Api.Controllers
             try
             {
                 _logger.Log("Post api/auth. Object AuthRequestViewModel initial: pw" + obj.Password + "user" + obj.UserName, "api", 3);
-                var auth = Encryptor.EncryptAuthRequest(obj);
 
-                var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
+                var user = AuthRepo.Get(x => string.Equals(Encryptor.DecryptUserName(x.UserName), obj.UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+                var auth = Encryptor.EncryptAuthRequest(obj);
 
                 if (user == null || user.Password != GetHash(user.Salt, obj.Password) || user.Profile.IsActive == false)
                 {
