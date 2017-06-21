@@ -21,14 +21,10 @@ namespace Api.Controllers
         [AuditlogFilter]
         public object Get()
         {
-            ILogger _logger = new Logger();
-            _logger.Log("api/appinfo initial", "api", 3);
-
             var allText = System.IO.File.ReadAllText(
                System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + "appInfo.json");
             
             var jsonObject = JsonConvert.DeserializeObject(allText);
-            _logger.Log("api/appinfo before", "api", 3);
             return jsonObject;
         }
     }

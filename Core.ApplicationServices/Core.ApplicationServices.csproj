@@ -55,6 +55,7 @@
     <Compile Include="CustomHttpClient.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Log4Net.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

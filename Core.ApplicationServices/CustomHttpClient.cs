@@ -15,13 +15,10 @@ namespace Core.ApplicationServices
     public class CustomHttpClient
     {
         private readonly string backendUrl;
-        private readonly ILogger _logger;
         private HttpClient _httpClient;
-        private WebClient _webClient;
 
         public CustomHttpClient()
         {
-            _logger = new Logger.Logger();
             backendUrl = ConfigurationManager.AppSettings["backendURL"];
             _httpClient = new HttpClient();
             InitializeClient();
@@ -34,12 +31,12 @@ namespace Core.ApplicationServices
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public void PostAuditLog(Dictionary<string, string> data)
+        public async Task PostAuditLog(Dictionary<string, string> data)
         {
             var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
             try
             {
-                var response = _httpClient.PostAsync("api/logging/audit", content);
+                var response = await _httpClient.PostAsync("api/logging/audit", content);
             }
             catch (Exception)
             {

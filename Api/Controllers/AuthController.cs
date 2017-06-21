@@ -49,7 +49,6 @@ namespace Api.Controllers
             ILogger _logger = new Logger();
             try
             {
-                _logger.Log("Post api/auth. Object AuthRequestViewModel initial: pw" + obj.Password + "user" + obj.UserName, "api", 3);
                 var auth = Encryptor.EncryptAuthRequest(obj);
 
                 var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
@@ -90,6 +89,5 @@ namespace Api.Controllers
                 throw;
             }
         }
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Core.ApplicationServices;
+using Core.ApplicationServices.Logger;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,11 @@ namespace Api.Filters
 {
     public class AuditlogFilter : ActionFilterAttribute
     {
-        private CustomHttpClient _client;
+        private ILogger _logger;
 
         public AuditlogFilter()
         {
-            _client = new CustomHttpClient();
+            _logger = new Logger();
         }
 
         public override void OnActionExecuting(HttpActionContext actionContext)
@@ -28,8 +29,7 @@ namespace Api.Filters
             //loggingData.Add("action", actionContext.RequestContext.RouteData.Values["action"].ToString());
             loggingData.Add("parameters", JsonConvert.SerializeObject(actionContext.ActionArguments));
 
-            _client.PostAuditLog(loggingData);
-            //_logger.AuditLog($"{DateTime.Now.Date} - {user} - {location} - {controller} - {action} - {parameters}");
+            _logger.AuditLog(loggingData);
             base.OnActionExecuting(actionContext);
         }
     }

@@ -11,10 +11,12 @@ namespace Core.ApplicationServices.Logger
     public class Logger : ILogger
     {
         private ILog log;
+        private CustomHttpClient _client;
 
         public Logger()
         {
             log = LogManager.GetLogger("Logger");
+            _client = new CustomHttpClient();
         }
 
         public void Log(string msg, string fileName, int level)
@@ -29,9 +31,9 @@ namespace Core.ApplicationServices.Logger
             }
         }
 
-        public void AuditLog(string message)
+        public void AuditLog(Dictionary<string, string> data)
         {
-
+            _client.PostAuditLog(data);
         }
     }
 }
