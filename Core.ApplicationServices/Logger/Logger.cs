@@ -7,49 +7,31 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.ApplicationServices.Logger
+{
+    public class Logger : ILogger
     {
-        public class Logger : ILogger
+        private ILog log;
+
+        public Logger()
         {
-            private ILog log;
+            log = LogManager.GetLogger("Logger");
+        }
 
-            public Logger()
+        public void Log(string msg, string fileName, int level)
+        {
+            var message = "[Niveau " + level + "] - " + msg;
+            switch (level)
             {
-                log = LogManager.GetLogger("Logger");
-            }
-
-            public void Log(string msg, string fileName)
-            {
-                log.Info(msg);
-            }
-
-            public void Log(string msg, string fileName, Exception ex)
-            {
-                log.Error(msg, ex);
-            }
-
-            public void Log(string msg, string fileName, Exception ex, int level)
-            {
-                var message = "[Niveau " + level + "] - " + msg;
-                switch (level)
-                {
-                    case 1: log.Error(message, ex); break;
-                    case 2: log.Warn(message, ex); break;
-                    default:
-                        log.Info(message, ex); break;
-                }
-            }
-
-            public void Log(string msg, string fileName, int level)
-            {
-                var message = "[Niveau " + level + "] - " + msg;
-                switch (level)
-                {
-                    case 1: log.Error(message); break;
-                    case 2: log.Warn(message); break;
-                    default:
-                        log.Info(message); break;
-                }
+                case 1: log.Error(message); break;
+                case 2: log.Warn(message); break;
+                default:
+                    log.Info(message); break;
             }
         }
 
+        public void AuditLog(string message)
+        {
+
+        }
     }
+}
