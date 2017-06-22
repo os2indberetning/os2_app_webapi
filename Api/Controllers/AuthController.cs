@@ -61,7 +61,6 @@ namespace Api.Controllers
                         user = u;
                     }
                 }
-                //var user = AuthRepo.Get(x => string.Equals(Encryptor.DecryptUserName(x.UserName), obj.UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
                 var auth = Encryptor.EncryptAuthRequest(obj);
 
