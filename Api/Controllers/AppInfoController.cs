@@ -15,10 +15,13 @@ using Api.Filters;
 
 namespace Api.Controllers
 {   
-    public class AppInfoController : ApiController
+    public class AppInfoController : BaseController
     {
+        public AppInfoController(ILogger logger) : base(logger)
+        {
+        }
+
         //api/appinfo
-        [AuditlogFilter]
         public object Get()
         {
             var allText = System.IO.File.ReadAllText(

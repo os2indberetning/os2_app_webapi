@@ -168,6 +168,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SubmitDriveController.cs" />
     <Compile Include="Controllers\SyncWithTokenController.cs" />

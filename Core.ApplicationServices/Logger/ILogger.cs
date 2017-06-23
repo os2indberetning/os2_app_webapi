@@ -9,6 +9,6 @@ namespace Core.ApplicationServices.Logger
     public interface ILogger
     {
         void Log(string msg, string fileName, int level);
-        void AuditLog(Dictionary<string, string> data);
+        void AuditLog(string user, string userLocation, string controller, string action, string parameters);
     }
 }

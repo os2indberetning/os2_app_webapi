@@ -22,6 +22,7 @@ namespace Infrastructure.Data
         public IDbSet<Route> Routes { get; set; }
         public IDbSet<Token> Tokens { get; set; }
         public IDbSet<UserAuth> UserAuths { get; set; }
+        public IDbSet<Auditlog> Auditlogs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

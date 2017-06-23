@@ -1,22 +1,21 @@
-﻿using log4net;
+﻿using Core.DomainModel.Model;
+using Core.DomainServices;
+using log4net;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.ApplicationServices.Logger
 {
     public class Logger : ILogger
     {
-        private ILog log;
-        private CustomHttpClient _client;
+        private ILog log { get; set; }
+        private IGenericRepository<Auditlog> _auditlogRepo;
+        private IUnitOfWork _uow;
 
-        public Logger()
+        public Logger(IGenericRepository<Auditlog> auditlogRepo, IUnitOfWork uow)
         {
             log = LogManager.GetLogger("Logger");
-            _client = new CustomHttpClient();
+            _auditlogRepo = auditlogRepo;
+            _uow = uow;
         }
 
         public void Log(string msg, string fileName, int level)
@@ -31,9 +30,20 @@ namespace Core.ApplicationServices.Logger
             }
         }
 
-        public void AuditLog(Dictionary<string, string> data)
+        public void AuditLog(string user, string userLocation, string controller, string action, string parameters)
         {
-            _client.PostAuditLog(data);
+            Auditlog logEntry = new Auditlog
+            {
+                Date = DateTime.Now.ToString(),
+                User = user ?? "not available",
+                Location = userLocation ?? "not available",
+                Controller = controller ?? "not available",
+                Action = action ?? "not available",
+                Parameters = parameters ?? "not available"
+            };
+
+            _auditlogRepo.Insert(logEntry);
+            _uow.Save();
         }
     }
 }

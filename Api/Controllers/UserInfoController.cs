@@ -12,13 +12,13 @@ using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {
-    public class UserInfoController : ApiController
+    public class UserInfoController : BaseController
     {
         private IGenericRepository<Rate> RateRepo { get; set; }
         private IGenericRepository<UserAuth> AuthRepo { get; set; }
         
 
-        public UserInfoController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo)
+        public UserInfoController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo, ILogger logger) : base(logger)
         {
             RateRepo = rateRepo;
             AuthRepo = authRepo;
@@ -27,8 +27,6 @@ namespace Api.Controllers
         // Post api/userinfo
         public IHttpActionResult Post(AuthorizationViewModel obj)
         {
-            ILogger _logger = new Logger();
-            _logger.Log("Post api/userinfo. Object AuthorizationViewModel GUID initial: " + obj.GuId, "api", 3);
             var encryptedGuid = Encryptor.EncryptAuthorization(obj).GuId;
 
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuid).FirstOrDefault();
@@ -58,7 +56,16 @@ namespace Api.Controllers
                 rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString() && x.isActive).ToList())
             };
 
-            _logger.Log("Post api/userinfo. Before OK: ", "api", 3);
+            try
+            {
+                Auditlog(auth.Profile.Initials, System.Reflection.MethodBase.GetCurrentMethod().Name, obj);
+            }
+            catch (Exception)
+            {
+                _logger.Log("Auditlogging failed", "", 1);
+                return InternalServerError();
+            }
+
             return Ok(ui);
             
         }

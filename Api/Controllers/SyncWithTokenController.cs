@@ -16,20 +16,21 @@ namespace Api.Controllers
         private IGenericRepository<Core.DomainModel.Profile> _profileRepo { get; set; }
         private IGenericRepository<Token> _tokenRepo { get; set; }
         private IGenericRepository<Rate> _rateRepo { get; set; }
+        private ILogger _logger;
         
 
-        public SyncWithTokenController(IUnitOfWork uow, IGenericRepository<Rate> rateRepo, IGenericRepository<Core.DomainModel.Profile> profileRepo, IGenericRepository<Token> tokenRepo)
+        public SyncWithTokenController(IUnitOfWork uow, IGenericRepository<Rate> rateRepo, IGenericRepository<Core.DomainModel.Profile> profileRepo, IGenericRepository<Token> tokenRepo, ILogger logger)
         {
             _uow = uow;
             _profileRepo = profileRepo;
             _tokenRepo = tokenRepo;
             _rateRepo = rateRepo;
+            logger = _logger;
         }
 
         // POST api/userdata
         public IHttpActionResult Post(TokenViewModel obj)
         {
-            ILogger _logger = new Logger();
             _logger.Log("Post api/userdata. Object Token initial: " + obj.TokenString, "api", 3);
             obj = Encryptor.EncryptToken(obj);
 

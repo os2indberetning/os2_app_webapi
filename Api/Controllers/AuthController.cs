@@ -15,16 +15,18 @@ using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {
-    public class AuthController : ApiController
+    public class AuthController : BaseController
     {
         private IGenericRepository<Rate> RateRepo { get; set; }
         private IGenericRepository<UserAuth> AuthRepo { get; set; }
+        private ILogger _logger;
 
 
-        public AuthController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo)
+        public AuthController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo, ILogger logger) : base(logger)
         {
             RateRepo = rateRepo;
             AuthRepo = authRepo;
+            _logger = logger;
         }
 
         private static string GetHash(string salt, string password)
@@ -46,7 +48,6 @@ namespace Api.Controllers
         // POST api/auth
         public IHttpActionResult Post(AuthRequestViewModel obj)
         {
-            ILogger _logger = new Logger();
             try
             {
                 var auth = Encryptor.EncryptAuthRequest(obj);
@@ -77,7 +78,15 @@ namespace Api.Controllers
                     profile = profile,
                     rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString() && x.isActive).ToList())
                 };
-                _logger.Log("Post api/auth. Before Ok. profile: " + ui.profile + " rates: " + ui.rates, "api", 3);
+                try
+                {
+                    Auditlog(user.Profile.Initials, System.Reflection.MethodBase.GetCurrentMethod().Name, obj);
+                }
+                catch (Exception)
+                {
+                    _logger.Log("Auditlogging failed", "", 1);
+                    return InternalServerError();
+                }
                 return Ok(ui);
             }
             catch (Exception e)
