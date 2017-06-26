@@ -14,14 +14,14 @@ using Core.ApplicationServices.Logger;
 namespace Api.Controllers
 {
 
-    public class TokenController : ApiController
+    public class TokenController : BaseController
     {
         public const string PasswordString = "";
         private IUnitOfWork _uow { get; set; }
         private IGenericRepository<Core.DomainModel.Profile> _profileRepo { get; set; }
         private IGenericRepository<Token> _tokenRepo { get; set; }
 
-        public TokenController(IUnitOfWork uow, IGenericRepository<Core.DomainModel.Profile> profileRepo, IGenericRepository<Token> tokenRepo)
+        public TokenController(IUnitOfWork uow, IGenericRepository<Core.DomainModel.Profile> profileRepo, IGenericRepository<Token> tokenRepo, ILogger logger) : base(logger)
         {
             _uow = uow;
             _tokenRepo = tokenRepo;
@@ -45,8 +45,6 @@ namespace Api.Controllers
         // POST new token from main server
         public IHttpActionResult Post(tmpCreateToken obj)
         {
-            ILogger _logger = new Logger();
-            _logger.Log("Post TokenController. Object tmpCreateToken initial: " + obj.Token, "api", 3);
             if (obj.Password == PasswordString)
             {
                 Core.DomainModel.Profile profile = _profileRepo.Get(x => x.Id == obj.ProfileId).FirstOrDefault();
@@ -72,30 +70,29 @@ namespace Api.Controllers
                         {
                             _tokenRepo.Insert(mToken);
                             _uow.Save();
-                            _logger.Log("Post TokenController. Before OK: ", "api", 3);
                             return Ok();
                         }
                         catch (Exception ex)
                         {
-                            _logger.Log("Post TokenController. Save error. Exception: " + ex.Message, "api", 3);
+                            _logger.Error($"{GetType().Name}, Post(), Save error" + ex.Message, ex);
                             return new CustomErrorActionResult(Request, "Save Error", ErrorCodes.SaveError,HttpStatusCode.BadRequest);
                         }
                     }
                     else
                     {
-                        _logger.Log("Post TokenController. Error: Token already exists ", "api", 3);
+                        _logger.Debug($"{GetType().Name}, Post(), Token already exists");
                         return new CustomErrorActionResult(Request, "Token allready exists", ErrorCodes.TokenAllreadyExists, HttpStatusCode.BadRequest);
                     }
                 }
                 else
                 {
-                    _logger.Log("Post TokenController. Error: User not found", "api", 3);
+                    _logger.Debug($"{GetType().Name}, Post(), User not found for {obj.ProfileId}");
                     return new CustomErrorActionResult(Request, "User not found", ErrorCodes.UserNotFound, HttpStatusCode.BadRequest);
                 }
             }
             else
             {
-                _logger.Log("Post TokenController. Error: Wrong password. Password: " + obj.Password, "api", 3);
+                _logger.Debug($"{GetType().Name}, Post(), Wrong password for {obj.ProfileId}");
                 return new CustomErrorActionResult(Request, "Wrong Password", ErrorCodes.BadPassword, HttpStatusCode.Unauthorized);
             }
         }
@@ -103,8 +100,6 @@ namespace Api.Controllers
         // Delete token from main server
         public IHttpActionResult Delete(tmpDeleteToken obj)
         {
-            ILogger _logger = new Logger();
-            _logger.Log("Delete TokenController. Object tmpDeleteToken initial: " + obj, "api", 3);
             if (obj.Password == PasswordString)
             {
                 TokenViewModel tvm = new TokenViewModel();
@@ -120,24 +115,23 @@ namespace Api.Controllers
                     try
                     {
                         _uow.Save();
-                        _logger.Log("Delete TokenController. Before OK: ", "api", 3);
                         return Ok();
                     }
                     catch (Exception ex)
                     {
-                        _logger.Log("Delete TokenController. Save error. Exception: " + ex.Message, "api", 3);
+                        _logger.Error($"{GetType().Name}, Delete(), Save Error", ex);
                         return new CustomErrorActionResult(Request, "Save Error", ErrorCodes.SaveError, HttpStatusCode.BadRequest);
                     }
                 }
                 else
                 {
-                    _logger.Log("Delete TokenController. Error: Token not found ", "api", 3);
+                    _logger.Debug($"{GetType().Name}, Delete(), Token not found for {obj.GuId}");
                     return new CustomErrorActionResult(Request, "Token not found", ErrorCodes.InvalidAuthorization, HttpStatusCode.BadRequest);
                 }
             }
             else
             {
-                _logger.Log("Delete TokenController. Error: Wrong password. Password: " + obj.Password, "api", 3);
+                _logger.Debug($"{GetType().Name}, Delete(), Wrong password for {obj.GuId}");
                 return new CustomErrorActionResult(Request, "Wrong Password", ErrorCodes.BadPassword, HttpStatusCode.Unauthorized);
             }
         }

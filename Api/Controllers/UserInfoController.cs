@@ -32,7 +32,7 @@ namespace Api.Controllers
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuid).FirstOrDefault();
 
             if (auth == null) {
-                _logger.Log("Post api/userinfo. Error: Invalid authorization ", "api", 3);
+                _logger.Debug($"{GetType().Name}, Post(), Error: Invalid authorization, guid: {encryptedGuid} ");
                 return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.InvalidAuthorization,
                     HttpStatusCode.Unauthorized);
             }
@@ -58,17 +58,15 @@ namespace Api.Controllers
 
             try
             {
-                Auditlog(auth.Profile.Initials, System.Reflection.MethodBase.GetCurrentMethod().Name, obj);
+                Auditlog(auth.UserName, System.Reflection.MethodBase.GetCurrentMethod().Name, obj);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.Log("Auditlogging failed", "", 1);
+                _logger.Error($"{GetType().Name}, Post(), Auditlogging failed", e);
                 return InternalServerError();
             }
 
             return Ok(ui);
-            
         }
-
     }
 }

@@ -19,14 +19,12 @@ namespace Api.Controllers
     {
         private IGenericRepository<Rate> RateRepo { get; set; }
         private IGenericRepository<UserAuth> AuthRepo { get; set; }
-        private ILogger _logger;
 
 
         public AuthController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo, ILogger logger) : base(logger)
         {
             RateRepo = rateRepo;
             AuthRepo = authRepo;
-            _logger = logger;
         }
 
         private static string GetHash(string salt, string password)
@@ -56,7 +54,7 @@ namespace Api.Controllers
 
                 if (user == null || user.Password != GetHash(user.Salt, obj.Password) || user.Profile.IsActive == false)
                 {
-                    _logger.Log("Post api/auth. Username or password is incorrect: User: " + user, "api", 3);
+                    _logger.Debug($"{GetType().Name}, Post(), Username or password is incorrect for user: " + user.Profile.Initials);
                     return new CustomErrorActionResult(Request, "Username or password is incorrect", ErrorCodes.IncorrectUserNameOrPassword, HttpStatusCode.Unauthorized);
                 }
                 var profile = AutoMapper.Mapper.Map<ProfileViewModel>(user.Profile);
@@ -78,23 +76,23 @@ namespace Api.Controllers
                     profile = profile,
                     rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString() && x.isActive).ToList())
                 };
+
+                //Auditlogging
                 try
                 {
-                    Auditlog(user.Profile.Initials, System.Reflection.MethodBase.GetCurrentMethod().Name, obj);
+                    Auditlog(auth.UserName, System.Reflection.MethodBase.GetCurrentMethod().Name, "username/password");
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    _logger.Log("Auditlogging failed", "", 1);
-                    return InternalServerError();
+                    _logger.Error($"{GetType().Name}, Post(), Auditlogging failed", e);
+                    return InternalServerError(); // Method not allowed to continue if auditlogging fails.
                 }
+
                 return Ok(ui);
             }
             catch (Exception e)
             {
-                _logger.Log("Post api/auth. Exception message: " + e.Message, "api", 3);
-                _logger.Log("Post api/auth. Exception stack trace: " + e.StackTrace, "api", 3);
-                _logger.Log("Post api/auth. InnerException stack trace: " + e.InnerException.Message, "api", 3);
-                _logger.Log("Post api/auth. InnerException stack trace: " + e.InnerException.StackTrace, "api", 3);
+                _logger.Error($"{GetType().Name}, Post(), Post method failed", e);
                 throw;
             }
         }

@@ -8,7 +8,8 @@ namespace Core.ApplicationServices.Logger
 {
     public interface ILogger
     {
-        void Log(string msg, string fileName, int level);
+        void Debug(string message);
+        void Error(string message, Exception e);
         void AuditLog(string user, string userLocation, string controller, string action, string parameters);
     }
 }

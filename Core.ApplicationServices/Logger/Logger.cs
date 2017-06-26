@@ -7,27 +7,25 @@ namespace Core.ApplicationServices.Logger
 {
     public class Logger : ILogger
     {
-        private ILog log { get; set; }
+        private ILog _log { get; set; }
         private IGenericRepository<Auditlog> _auditlogRepo;
         private IUnitOfWork _uow;
 
         public Logger(IGenericRepository<Auditlog> auditlogRepo, IUnitOfWork uow)
         {
-            log = LogManager.GetLogger("Logger");
+            _log = LogManager.GetLogger("Logger");
             _auditlogRepo = auditlogRepo;
             _uow = uow;
         }
 
-        public void Log(string msg, string fileName, int level)
+        public void Debug(string message)
         {
-            var message = "[Niveau " + level + "] - " + msg;
-            switch (level)
-            {
-                case 1: log.Error(message); break;
-                case 2: log.Warn(message); break;
-                default:
-                    log.Info(message); break;
-            }
+            _log.Debug(message);
+        }
+
+        public void Error(string message, Exception e)
+        {
+            _log.Error(message, e);
         }
 
         public void AuditLog(string user, string userLocation, string controller, string action, string parameters)
@@ -45,5 +43,6 @@ namespace Core.ApplicationServices.Logger
             _auditlogRepo.Insert(logEntry);
             _uow.Save();
         }
+
     }
 }

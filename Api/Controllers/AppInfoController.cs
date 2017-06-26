@@ -11,7 +11,6 @@ using Api.Models;
 using Api.Encryption;
 using Newtonsoft.Json;
 using Core.ApplicationServices.Logger;
-using Api.Filters;
 
 namespace Api.Controllers
 {   

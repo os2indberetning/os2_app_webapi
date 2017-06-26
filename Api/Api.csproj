@@ -179,7 +179,6 @@
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Encryption\Encryptor.cs" />
     <Compile Include="Encryption\StringCipher.cs" />
-    <Compile Include="Filters\AuditlogFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -215,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.ApplicationServices\Core.ApplicationServices.csproj">
