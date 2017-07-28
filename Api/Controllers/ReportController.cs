@@ -11,7 +11,7 @@ using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {
-    public class ReportController : ApiController
+    public class ReportController : BaseController
     {
 
         private IUnitOfWork Uow { get; set; }
@@ -19,7 +19,7 @@ namespace Api.Controllers
         private IGenericRepository<UserAuth> AuthRepo { get; set; }
        
 
-        public ReportController(IUnitOfWork uow, IGenericRepository<DriveReport> driveReportRepo, IGenericRepository<UserAuth> authRepo)
+        public ReportController(IUnitOfWork uow, IGenericRepository<DriveReport> driveReportRepo, IGenericRepository<UserAuth> authRepo, ILogger logger) : base(logger)
         {
             Uow = uow;
             DriveReportRepo = driveReportRepo;
@@ -35,27 +35,25 @@ namespace Api.Controllers
         // POST /report
         public IHttpActionResult Post(DriveObject driveObject)
         {
-            ILogger _logger = new Logger();
-            _logger.Log("Post /report. Object DriveObject.AuthorizationGuid initial: " + driveObject.Authorization.GuId, "api", 3);
             var encryptedGuId = Encryptor.EncryptAuthorization(driveObject.Authorization).GuId;
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuId).FirstOrDefault();
             var DuplicateReportCheck = DriveReportRepo.Get(t => t.Uuid == driveObject.DriveReport.Uuid).Any();
 
             if (auth == null)
             {
-                _logger.Log("Post /report. Invalid authorization", "api", 3);
+                _logger.Debug($"{GetType().Name}, Post(), Invalid authorization for guid: {encryptedGuId}");
                 return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.InvalidAuthorization,
                     HttpStatusCode.Unauthorized);
             }
             if(auth.ProfileId != driveObject.DriveReport.ProfileId)
             {
-                _logger.Log("Post /report. User and drive report user do not match", "api", 3);
+                _logger.Debug($"{GetType().Name}, Post(), User and drive report user do not match for profileId: {auth.ProfileId}");
                 return new CustomErrorActionResult(Request, "User and drive report user do not match", ErrorCodes.ReportAndUserDoNotMatch,
                      HttpStatusCode.Unauthorized);
             }
             if (DuplicateReportCheck)
             {
-                _logger.Log($"Post /report. Report rejected, duplicate found. Drivereport uuid: {driveObject.DriveReport.Uuid}", "api", 3);
+                _logger.Debug($"{GetType().Name}, Post(), Report rejected, duplicate found. Drivereport uuid: {driveObject.DriveReport.Uuid}, profileId: {auth.ProfileId}");
                 return new CustomErrorActionResult(Request, "Report rejected, duplicate found", ErrorCodes.DuplicateReportFound, HttpStatusCode.OK);
             }
 
@@ -65,15 +63,24 @@ namespace Api.Controllers
 
                 var model = AutoMapper.Mapper.Map<DriveReport>(driveObject.DriveReport);
 
+                try
+                {
+                    Auditlog(auth.UserName, System.Reflection.MethodBase.GetCurrentMethod().Name, driveObject.DriveReport);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error($"{GetType().Name}, Post(), Auditlog failed", e);
+                    return InternalServerError();
+                }
+
                 DriveReportRepo.Insert(model);
                 Uow.Save();
 
-                _logger.Log("Post /report. Before ok", "api", 3);
                 return Ok();
             }
             catch (Exception ex)
             {
-                _logger.Log($"Post /report. Exception Could not save drivereport (uuid: {driveObject.DriveReport.Uuid}): " + ex.Message, "api", 3);
+                _logger.Error($"{GetType().Name}, Post(), Could not save drivereport, uuid: {driveObject.DriveReport.Uuid}, profileId: {auth.ProfileId}", ex);
                 return new CustomErrorActionResult(Request, "Could not save drivereport", ErrorCodes.SaveError, HttpStatusCode.BadRequest);
             }
         }

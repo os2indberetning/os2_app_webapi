@@ -1,55 +1,48 @@
-﻿using log4net;
+﻿using Core.DomainModel.Model;
+using Core.DomainServices;
+using log4net;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.ApplicationServices.Logger
+{
+    public class Logger : ILogger
     {
-        public class Logger : ILogger
+        private ILog _log { get; set; }
+        private IGenericRepository<Auditlog> _auditlogRepo;
+        private IUnitOfWork _uow;
+
+        public Logger(IGenericRepository<Auditlog> auditlogRepo, IUnitOfWork uow)
         {
-            private ILog log;
+            _log = LogManager.GetLogger("Logger");
+            _auditlogRepo = auditlogRepo;
+            _uow = uow;
+        }
 
-            public Logger()
-            {
-                log = LogManager.GetLogger("Logger");
-            }
+        public void Debug(string message)
+        {
+            _log.Debug(message);
+        }
 
-            public void Log(string msg, string fileName)
-            {
-                log.Info(msg);
-            }
+        public void Error(string message, Exception e)
+        {
+            _log.Error(message, e);
+        }
 
-            public void Log(string msg, string fileName, Exception ex)
+        public void AuditLog(string user, string userLocation, string controller, string action, string parameters)
+        {
+            Auditlog logEntry = new Auditlog
             {
-                log.Error(msg, ex);
-            }
+                Date = DateTime.Now.ToString(),
+                User = user ?? "not available",
+                Location = userLocation ?? "not available",
+                Controller = controller ?? "not available",
+                Action = action ?? "not available",
+                Parameters = parameters ?? "not available"
+            };
 
-            public void Log(string msg, string fileName, Exception ex, int level)
-            {
-                var message = "[Niveau " + level + "] - " + msg;
-                switch (level)
-                {
-                    case 1: log.Error(message, ex); break;
-                    case 2: log.Warn(message, ex); break;
-                    default:
-                        log.Info(message, ex); break;
-                }
-            }
-
-            public void Log(string msg, string fileName, int level)
-            {
-                var message = "[Niveau " + level + "] - " + msg;
-                switch (level)
-                {
-                    case 1: log.Error(message); break;
-                    case 2: log.Warn(message); break;
-                    default:
-                        log.Info(message); break;
-                }
-            }
+            _auditlogRepo.Insert(logEntry);
+            _uow.Save();
         }
 
     }
+}

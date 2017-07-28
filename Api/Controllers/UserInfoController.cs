@@ -12,13 +12,13 @@ using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {
-    public class UserInfoController : ApiController
+    public class UserInfoController : BaseController
     {
         private IGenericRepository<Rate> RateRepo { get; set; }
         private IGenericRepository<UserAuth> AuthRepo { get; set; }
         
 
-        public UserInfoController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo)
+        public UserInfoController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo, ILogger logger) : base(logger)
         {
             RateRepo = rateRepo;
             AuthRepo = authRepo;
@@ -27,14 +27,12 @@ namespace Api.Controllers
         // Post api/userinfo
         public IHttpActionResult Post(AuthorizationViewModel obj)
         {
-            ILogger _logger = new Logger();
-            _logger.Log("Post api/userinfo. Object AuthorizationViewModel GUID initial: " + obj.GuId, "api", 3);
             var encryptedGuid = Encryptor.EncryptAuthorization(obj).GuId;
 
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuid).FirstOrDefault();
 
             if (auth == null) {
-                _logger.Log("Post api/userinfo. Error: Invalid authorization ", "api", 3);
+                _logger.Debug($"{GetType().Name}, Post(), Error: Invalid authorization, guid: {encryptedGuid} ");
                 return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.InvalidAuthorization,
                     HttpStatusCode.Unauthorized);
             }
@@ -58,10 +56,17 @@ namespace Api.Controllers
                 rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString() && x.isActive).ToList())
             };
 
-            _logger.Log("Post api/userinfo. Before OK: ", "api", 3);
-            return Ok(ui);
-            
-        }
+            try
+            {
+                Auditlog(auth.UserName, System.Reflection.MethodBase.GetCurrentMethod().Name, obj);
+            }
+            catch (Exception e)
+            {
+                _logger.Error($"{GetType().Name}, Post(), Auditlogging failed", e);
+                return InternalServerError();
+            }
 
+            return Ok(ui);
+        }
     }
 }

@@ -10,7 +10,7 @@ using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {
-    public class SyncWithTokenController : ApiController
+    public class SyncWithTokenController : BaseController
     {
         private IUnitOfWork _uow { get; set; }
         private IGenericRepository<Core.DomainModel.Profile> _profileRepo { get; set; }
@@ -18,7 +18,7 @@ namespace Api.Controllers
         private IGenericRepository<Rate> _rateRepo { get; set; }
         
 
-        public SyncWithTokenController(IUnitOfWork uow, IGenericRepository<Rate> rateRepo, IGenericRepository<Core.DomainModel.Profile> profileRepo, IGenericRepository<Token> tokenRepo)
+        public SyncWithTokenController(IUnitOfWork uow, IGenericRepository<Rate> rateRepo, IGenericRepository<Core.DomainModel.Profile> profileRepo, IGenericRepository<Token> tokenRepo, ILogger logger) : base(logger)
         {
             _uow = uow;
             _profileRepo = profileRepo;
@@ -29,9 +29,9 @@ namespace Api.Controllers
         // POST api/userdata
         public IHttpActionResult Post(TokenViewModel obj)
         {
-            ILogger _logger = new Logger();
-            _logger.Log("Post api/userdata. Object Token initial: " + obj.TokenString, "api", 3);
             obj = Encryptor.EncryptToken(obj);
+
+            Auditlog(null, System.Reflection.MethodBase.GetCurrentMethod().Name, obj);
 
             //Confirm link with token
             var tokens = _tokenRepo.Get(t => t.TokenString == obj.TokenString);
@@ -54,17 +54,16 @@ namespace Api.Controllers
                         UserInfoViewModel ui = new UserInfoViewModel();
                         ui.profile = profile;
                         ui.rates = AutoMapper.Mapper.Map<List<RateViewModel>>(_rateRepo.Get().ToList());
-                        _logger.Log("Post api/userdata before OK. Token: " + token, "api", 3);
                         return Ok(ui);
                     }
                 }
-                _logger.Log("Post api/userdata. Error: Token already used ", "api", 3);
+                _logger.Debug($"{GetType().Name}, Post(), Token already used, guid: {obj.GuId}");
                 return new CustomErrorActionResult(Request, "Token allready used", ErrorCodes.TokenAllreadyActivated, HttpStatusCode.BadRequest);
                 
             }
             else
             {
-                _logger.Log("Post api/userdata. Error: Token not found", "api", 3);
+                _logger.Debug($"{GetType().Name}, Post(), Token not found, guid: {obj.GuId}");
                 return new CustomErrorActionResult(Request,"Token not found", ErrorCodes.InvalidAuthorization, HttpStatusCode.Unauthorized);
             }
         }

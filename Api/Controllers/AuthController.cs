@@ -15,13 +15,13 @@ using Core.ApplicationServices.Logger;
 
 namespace Api.Controllers
 {
-    public class AuthController : ApiController
+    public class AuthController : BaseController
     {
         private IGenericRepository<Rate> RateRepo { get; set; }
         private IGenericRepository<UserAuth> AuthRepo { get; set; }
 
 
-        public AuthController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo)
+        public AuthController(IGenericRepository<Rate> rateRepo, IGenericRepository<UserAuth> authRepo, ILogger logger) : base(logger)
         {
             RateRepo = rateRepo;
             AuthRepo = authRepo;
@@ -46,27 +46,15 @@ namespace Api.Controllers
         // POST api/auth
         public IHttpActionResult Post(AuthRequestViewModel obj)
         {
-            ILogger _logger = new Logger();
             try
             {
-                _logger.Log("Post api/auth. Object AuthRequestViewModel initial: pw" + obj.Password + "user" + obj.UserName, "api", 3);
-
-                var users = AuthRepo.Get();
-                UserAuth user = null;
-                foreach(var u in users)
-                {
-                    var decryptedUserName = Encryptor.DecryptUserName(u.UserName);
-                    if (decryptedUserName.Equals(obj.UserName, StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        user = u;
-                    }
-                }
-
                 var auth = Encryptor.EncryptAuthRequest(obj);
+
+                var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
 
                 if (user == null || user.Password != GetHash(user.Salt, obj.Password) || user.Profile.IsActive == false)
                 {
-                    _logger.Log("Post api/auth. Username or password is incorrect: User: " + user, "api", 3);
+                    _logger.Debug($"{GetType().Name}, Post(), Username or password is incorrect for user: " + user.Profile.Initials);
                     return new CustomErrorActionResult(Request, "Username or password is incorrect", ErrorCodes.IncorrectUserNameOrPassword, HttpStatusCode.Unauthorized);
                 }
                 var profile = AutoMapper.Mapper.Map<ProfileViewModel>(user.Profile);
@@ -88,18 +76,25 @@ namespace Api.Controllers
                     profile = profile,
                     rates = AutoMapper.Mapper.Map<List<RateViewModel>>(RateRepo.Get().Where(x => x.Year == currentYear.ToString() && x.isActive).ToList())
                 };
-                _logger.Log("Post api/auth. Before Ok. profile: " + ui.profile + " rates: " + ui.rates, "api", 3);
+
+                //Auditlogging
+                try
+                {
+                    Auditlog(auth.UserName, System.Reflection.MethodBase.GetCurrentMethod().Name, "username/password");
+                }
+                catch (Exception e)
+                {
+                    _logger.Error($"{GetType().Name}, Post(), Auditlogging failed", e);
+                    return InternalServerError(); // Method not allowed to continue if auditlogging fails.
+                }
+
                 return Ok(ui);
             }
             catch (Exception e)
             {
-                _logger.Log("Post api/auth. Exception message: " + e.Message, "api", 3);
-                _logger.Log("Post api/auth. Exception stack trace: " + e.StackTrace, "api", 3);
-                _logger.Log("Post api/auth. InnerException stack trace: " + e.InnerException.Message, "api", 3);
-                _logger.Log("Post api/auth. InnerException stack trace: " + e.InnerException.StackTrace, "api", 3);
+                _logger.Error($"{GetType().Name}, Post(), Post method failed", e);
                 throw;
             }
         }
-
     }
 }

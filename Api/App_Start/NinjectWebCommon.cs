@@ -12,6 +12,7 @@ namespace Api.App_Start
     using Ninject.Web.Common;
     using Infrastructure.Data;
     using Core.DomainServices;
+    using Core.ApplicationServices.Logger;
 
     public static class NinjectWebCommon 
     {
@@ -66,6 +67,7 @@ namespace Api.App_Start
             kernel.Bind<SampleContext>().ToSelf().InRequestScope();
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
             kernel.Bind(typeof(IGenericRepository<>)).To(typeof(GenericRepository<>));
+            kernel.Bind<ILogger>().To<Logger>();
         }        
     }
 }
