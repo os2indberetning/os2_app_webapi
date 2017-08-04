@@ -48,9 +48,18 @@ namespace Api.Controllers
         {
             try
             {
-                var auth = Encryptor.EncryptAuthRequest(obj);
+                var users = AuthRepo.Get();
+                UserAuth user = null;
+                foreach (var u in users)
+                {
+                    var decryptedUserName = Encryptor.DecryptUserName(u.UserName);
+                    if (decryptedUserName.Equals(obj.UserName, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        user = u;
+                    }
+                }
 
-                var user = AuthRepo.Get(x => x.UserName == auth.UserName).FirstOrDefault();
+                var auth = Encryptor.EncryptAuthRequest(obj);
 
                 if (user == null || user.Password != GetHash(user.Salt, obj.Password) || user.Profile.IsActive == false)
                 {
