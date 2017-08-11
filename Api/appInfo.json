@@ -41,7 +41,7 @@
   },
   {
     "Name": "local",
-    "APIUrl": "http://172.20.1.172:60992/api/",
+    "APIUrl": "",
     "ImgUrl": "http://www.os2web.dk/sites/all/themes/liva/images/logo.png",
     "TextColor": "#FFFFFF",
     "PrimaryColor": "#538cc6",
