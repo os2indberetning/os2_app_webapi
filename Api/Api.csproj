@@ -203,7 +203,6 @@
     </Content>
     <Content Include="Log4Net.config" />
     <Content Include="DMZconnections.config" />
-    <Content Include="DMZcustomSettings.config" />
     <None Include="Properties\PublishProfiles\*.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
