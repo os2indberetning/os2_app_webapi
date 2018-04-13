@@ -26,6 +26,9 @@ namespace Core.DomainModel
         public int RateId { get; set; }
         //public int RouteId { get; set; }
 
+        [Index(IsUnique = true)]
+        [Column(TypeName = "VARCHAR")]
+        [StringLength(38)]
         public string Uuid { get; set; }
 
         public virtual Profile Profile { get; set; }

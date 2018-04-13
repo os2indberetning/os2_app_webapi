@@ -8,6 +8,8 @@ using Core.DomainModel;
 using Core.DomainModel.Model;
 using Core.DomainServices;
 using Core.ApplicationServices.Logger;
+using System.Data.Entity.Infrastructure;
+using MySql.Data.MySqlClient;
 
 namespace Api.Controllers
 {
@@ -74,7 +76,39 @@ namespace Api.Controllers
                 }
 
                 DriveReportRepo.Insert(model);
-                Uow.Save();
+                try
+                {
+                    Uow.Save();
+                }
+                catch (DbUpdateException dbue)
+                {
+                    var innertype = dbue.InnerException?.InnerException.GetType();
+                    if (dbue.InnerException?.InnerException is MySqlException)
+                    {
+                        MySqlException sqle = (MySqlException) dbue.InnerException?.InnerException;
+                        if(sqle.Number == 1062)
+                        {
+                            // Unique constraint on uuid has been violated, so the drivereport should not be saved. This handles an error where the app would send two duplicate reports in a row.
+                            _logger.Error($"{GetType().Name}, Post(), Duplicate report", dbue);
+                            return new CustomErrorActionResult(Request, "Report rejected, duplicate found", ErrorCodes.DuplicateReportFound, HttpStatusCode.OK);
+                        }
+                        else
+                        {
+                            _logger.Error($"{GetType().Name}, Post(), Save new drivereport failed", dbue);
+                            return InternalServerError();
+                        }
+                    }
+                    else
+                    {
+                        _logger.Error($"{GetType().Name}, Post(), Save new drivereport failed", dbue);
+                        return InternalServerError();
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.Error($"{GetType().Name}, Post(), Save new drivereport failed", e);
+                    return InternalServerError();
+                }
 
                 return Ok();
             }
@@ -84,7 +118,5 @@ namespace Api.Controllers
                 return new CustomErrorActionResult(Request, "Could not save drivereport", ErrorCodes.SaveError, HttpStatusCode.BadRequest);
             }
         }
-
-
     }
 }

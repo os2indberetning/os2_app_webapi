@@ -127,6 +127,10 @@
     <Compile Include="Migrations\201706230906392_AuditlogAdded.Designer.cs">
       <DependentUpon>201706230906392_AuditlogAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804121228341_AddedUniqueIndexToDriveReport.cs" />
+    <Compile Include="Migrations\201804121228341_AddedUniqueIndexToDriveReport.Designer.cs">
+      <DependentUpon>201804121228341_AddedUniqueIndexToDriveReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleContext.cs" />
@@ -204,6 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706230906392_AuditlogAdded.resx">
       <DependentUpon>201706230906392_AuditlogAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804121228341_AddedUniqueIndexToDriveReport.resx">
+      <DependentUpon>201804121228341_AddedUniqueIndexToDriveReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
