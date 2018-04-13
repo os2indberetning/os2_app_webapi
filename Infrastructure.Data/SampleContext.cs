@@ -1,6 +1,8 @@
 ﻿using System.Data.Entity;
 using Core.DomainModel;
 using Core.DomainModel.Model;
+using System.Data.Entity.Infrastructure.Annotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infrastructure.Data
 {
