@@ -19,6 +19,5 @@ namespace Api.Models
         public AuthorizationViewModel Authorization { get; set; }
 
         public virtual ICollection<EmploymentViewModel> Employments { get; set; }
-        public virtual ICollection<TokenViewModel> Tokens { get; set; }
     }
 }

@@ -10,7 +10,6 @@ namespace Api.App_Start
         {
 
             Mapper.CreateMap<EmploymentViewModel, Employment>().ReverseMap();
-            Mapper.CreateMap<TokenViewModel, Token>().ReverseMap();
             Mapper.CreateMap<RateViewModel, Rate>().ReverseMap();
 
             Mapper.CreateMap<DriveReportViewModel, DriveReport>();
