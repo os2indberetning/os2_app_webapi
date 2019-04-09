@@ -30,7 +30,6 @@ namespace Core.DomainModel
         public bool IsActive { get; set; }
 
         public virtual ICollection<Employment> Employments { get; set; }
-        public virtual ICollection<Token> Tokens { get; set; }
         public virtual ICollection<DriveReport> DriveReports { get; set; }
 
     }

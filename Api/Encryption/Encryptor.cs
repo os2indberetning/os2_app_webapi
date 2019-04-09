@@ -41,7 +41,9 @@ namespace Api.Encryption
         public static AuthorizationViewModel EncryptAuthorization(AuthorizationViewModel auth)
         {
             if (auth.GuId != null)
+            {
                 auth.GuId = StringCipher.Encrypt(auth.GuId, EncryptKey);
+            }
 
             return auth;
         }
@@ -49,7 +51,9 @@ namespace Api.Encryption
         public static AuthorizationViewModel DecryptAuthorization(AuthorizationViewModel auth)
         {
             if (auth.GuId != null)
+            {
                 auth.GuId = StringCipher.Decrypt(auth.GuId, EncryptKey);
+            }
 
             return auth;
         }
@@ -57,7 +61,9 @@ namespace Api.Encryption
         public static AuthRequestViewModel EncryptAuthRequest(AuthRequestViewModel auth)
         {
             if (auth.UserName != null)
+            {
                 auth.UserName = StringCipher.Encrypt(auth.UserName, EncryptKey);
+            }
 
             return auth;
         }
