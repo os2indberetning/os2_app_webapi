@@ -54,17 +54,6 @@ namespace Api.Encryption
             return auth;
         }
 
-        public static TokenViewModel EncryptToken(TokenViewModel token)
-        {
-            if (token.GuId != null)
-            token.GuId = StringCipher.Encrypt(token.GuId, EncryptKey);
-
-            if (token.TokenString != null)
-            token.TokenString = StringCipher.Encrypt(token.TokenString, EncryptKey);
-
-            return token;
-        }
-
         public static AuthRequestViewModel EncryptAuthRequest(AuthRequestViewModel auth)
         {
             if (auth.UserName != null)
@@ -87,12 +76,6 @@ namespace Api.Encryption
                 e = DecryptEmployment(e);
             }
 
-            for (int i = 0; i < profile.Tokens.Count(); i++)
-            {
-                TokenViewModel t = profile.Tokens.ElementAt(i);
-                t = DecryptToken(t);
-            }
-
             return profile;
         }
 
@@ -100,16 +83,6 @@ namespace Api.Encryption
         {
             employment.EmploymentPosition = StringCipher.Decrypt(employment.EmploymentPosition, EncryptKey);
             return employment;
-        }
-
-        public static TokenViewModel DecryptToken(TokenViewModel token)
-        {
-            if (token.GuId != null)
-            token.GuId = StringCipher.Decrypt(token.GuId, EncryptKey);
-
-            if (token.TokenString != null)
-            token.TokenString = StringCipher.Decrypt(token.TokenString, EncryptKey);
-            return token;
         }
 
         public static string DecryptUserName(string username)

@@ -14,7 +14,6 @@ namespace Core.DomainModel
         {
             this.DriveReports = new HashSet<DriveReport>();
             this.Employments = new HashSet<Employment>();
-            this.Tokens = new HashSet<Token>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
