@@ -161,6 +161,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="connections.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\MappingConfig.cs" />
@@ -196,7 +197,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Log4Net.config" />
-    <Content Include="DMZconnections.config" />
     <None Include="Properties\PublishProfiles\*.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
