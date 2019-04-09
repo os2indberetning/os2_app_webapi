@@ -137,6 +137,7 @@
     <Compile Include="SampleContext.cs" />
     <Compile Include="SampleSeedInitializer.cs" />
     <Compile Include="UnitOfWork.cs" />
+    <Compile Include="MigrationsRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B5E0F3DE-0E43-4946-BDE9-F877FDA27DC3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>DBMigrator</RootNamespace>
+    <AssemblyName>DBMigrator</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <StartAction>Project</StartAction>
+    <EnvironmentVariables>
+      <Variable name="TARGET_PROJECT_FILE" value="$(SolutionDir)/Infrastructure.Data/Infrastructure.DataAccess.csproj" />
+      <Variable name="MIGRATIONS_OUTPUT_DIRECTORY" value="$(SolutionDir)/Infrastructure.Data/Migrations" />
+    </EnvironmentVariables>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.6\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Build.Engine" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="..\Api\connections.config">
+      <Link>connections.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.Data\Infrastructure.Data.csproj">
+      <Project>{2728D50F-0A00-400A-BC4D-3ABD342C1682}</Project>
+      <Name>Infrastructure.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
