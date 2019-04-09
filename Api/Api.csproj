@@ -36,8 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PublishDatabaseSettings>
-      <Objects>
-      </Objects>
+      <Objects></Objects>
     </PublishDatabaseSettings>
     <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
     <IncludeIisSettings>false</IncludeIisSettings>
@@ -162,6 +161,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="connections.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\MappingConfig.cs" />
@@ -170,11 +170,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Controllers\SubmitDriveController.cs" />
-    <Compile Include="Controllers\SyncWithTokenController.cs" />
-    <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="Controllers\AppInfoController.cs" />
-    <Compile Include="Controllers\UserDataController.cs" />
     <Compile Include="Controllers\ErrorActionResult.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Encryption\Encryptor.cs" />
@@ -186,7 +182,6 @@
     <Compile Include="Models\AuthRequestViewModel.cs" />
     <Compile Include="Models\EmploymentViewModel.cs" />
     <Compile Include="Models\OrgUnitViewModel.cs" />
-    <Compile Include="Models\TokenViewModel.cs" />
     <Compile Include="Models\RouteViewModel.cs" />
     <Compile Include="Models\GPSCoordinateViewModel.cs" />
     <Compile Include="Models\DriveReportViewModel.cs" />
@@ -202,7 +197,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Log4Net.config" />
-    <Content Include="DMZconnections.config" />
     <None Include="Properties\PublishProfiles\*.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -259,6 +253,11 @@
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
+    <MonoDevelop>
+      <Properties>
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+      </Properties>
+    </MonoDevelop>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />

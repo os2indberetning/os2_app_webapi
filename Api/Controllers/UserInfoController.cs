@@ -31,7 +31,8 @@ namespace Api.Controllers
 
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuid).FirstOrDefault();
 
-            if (auth == null) {
+            if (auth == null)
+            {
                 _logger.Debug($"{GetType().Name}, Post(), Error: Invalid authorization, guid: {encryptedGuid} ");
                 return new CustomErrorActionResult(Request, "Invalid authorization", ErrorCodes.InvalidAuthorization,
                     HttpStatusCode.Unauthorized);

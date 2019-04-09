@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  os2dmzdb:
+    image: mysql:5.7.24
+    environment:
+      MYSQL_DATABASE: 'dmzdb'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - ./os2dmzdb/dump:/os2dzmdbdump/
+      - ./os2dmzdb/lowercase.cnf:/etc/mysql/mysql.conf.d/lowercase.cnf
+

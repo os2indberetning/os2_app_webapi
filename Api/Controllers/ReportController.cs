@@ -39,7 +39,7 @@ namespace Api.Controllers
         {
             var encryptedGuId = Encryptor.EncryptAuthorization(driveObject.Authorization).GuId;
             var auth = AuthRepo.Get(t => t.GuId == encryptedGuId).FirstOrDefault();
-            var DuplicateReportCheck = DriveReportRepo.Get(t => t.Uuid == driveObject.DriveReport.Uuid).Any();
+            var duplicateReportCheck = DriveReportRepo.Get(t => t.Uuid == driveObject.DriveReport.Uuid).Any();
 
             if (auth == null)
             {
@@ -53,7 +53,7 @@ namespace Api.Controllers
                 return new CustomErrorActionResult(Request, "User and drive report user do not match", ErrorCodes.ReportAndUserDoNotMatch,
                      HttpStatusCode.Unauthorized);
             }
-            if (DuplicateReportCheck)
+            if (duplicateReportCheck)
             {
                 _logger.Debug($"{GetType().Name}, Post(), Report rejected, duplicate found. Drivereport uuid: {driveObject.DriveReport.Uuid}, profileId: {auth.ProfileId}");
                 return new CustomErrorActionResult(Request, "Report rejected, duplicate found", ErrorCodes.DuplicateReportFound, HttpStatusCode.OK);
@@ -85,24 +85,20 @@ namespace Api.Controllers
                     var innertype = dbue.InnerException?.InnerException.GetType();
                     if (dbue.InnerException?.InnerException is MySqlException)
                     {
-                        MySqlException sqle = (MySqlException) dbue.InnerException?.InnerException;
-                        if(sqle.Number == 1062)
+                        MySqlException sqle = (MySqlException)dbue.InnerException?.InnerException;
+                        if (sqle.Number == 1062)
                         {
                             // Unique constraint on uuid has been violated, so the drivereport should not be saved. This handles an error where the app would send two duplicate reports in a row.
                             _logger.Error($"{GetType().Name}, Post(), Duplicate report", dbue);
                             return new CustomErrorActionResult(Request, "Report rejected, duplicate found", ErrorCodes.DuplicateReportFound, HttpStatusCode.OK);
                         }
-                        else
-                        {
-                            _logger.Error($"{GetType().Name}, Post(), Save new drivereport failed", dbue);
-                            return InternalServerError();
-                        }
-                    }
-                    else
-                    {
+
                         _logger.Error($"{GetType().Name}, Post(), Save new drivereport failed", dbue);
                         return InternalServerError();
                     }
+
+                    _logger.Error($"{GetType().Name}, Post(), Save new drivereport failed", dbue);
+                    return InternalServerError();
                 }
                 catch (Exception e)
                 {

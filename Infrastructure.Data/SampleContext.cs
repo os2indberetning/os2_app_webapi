@@ -22,7 +22,6 @@ namespace Infrastructure.Data
         public IDbSet<Profile> Profiles { get; set; }
         public IDbSet<Rate> Rates { get; set; }
         public IDbSet<Route> Routes { get; set; }
-        public IDbSet<Token> Tokens { get; set; }
         public IDbSet<UserAuth> UserAuths { get; set; }
         public IDbSet<Auditlog> Auditlogs { get; set; }
 
