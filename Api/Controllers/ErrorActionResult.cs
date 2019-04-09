@@ -15,8 +15,6 @@ namespace Api.Controllers
     {
         UnknownError = 600,
         InvalidAuthorization = 610,
-        TokenAllreadyActivated = 620,
-        TokenAllreadyExists = 630,
         SaveError = 640,
         BadPassword = 650,
         UserNotFound = 660,
