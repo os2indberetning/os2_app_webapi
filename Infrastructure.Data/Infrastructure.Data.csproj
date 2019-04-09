@@ -138,6 +138,10 @@
     <Compile Include="SampleSeedInitializer.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="MigrationsRunner.cs" />
+    <Compile Include="Migrations\201904091217288_RemoveToken.cs" />
+    <Compile Include="Migrations\201904091217288_RemoveToken.Designer.cs">
+      <DependentUpon>201904091217288_RemoveToken.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -213,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804121228341_AddedUniqueIndexToDriveReport.resx">
       <DependentUpon>201804121228341_AddedUniqueIndexToDriveReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091217288_RemoveToken.resx">
+      <DependentUpon>201904091217288_RemoveToken.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
