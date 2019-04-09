@@ -30,7 +30,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <StartAction>Project</StartAction>
     <EnvironmentVariables>
-      <Variable name="TARGET_PROJECT_FILE" value="$(SolutionDir)/Infrastructure.Data/Infrastructure.DataAccess.csproj" />
+      <Variable name="TARGET_PROJECT_FILE" value="$(SolutionDir)/Infrastructure.Data/Infrastructure.Data.csproj" />
       <Variable name="MIGRATIONS_OUTPUT_DIRECTORY" value="$(SolutionDir)/Infrastructure.Data/Migrations" />
     </EnvironmentVariables>
   </PropertyGroup>
