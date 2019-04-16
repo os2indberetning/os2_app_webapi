@@ -18,9 +18,10 @@ namespace Api.Controllers
         SaveError = 640,
         BadPassword = 650,
         UserNotFound = 660,
+        UserNotActive = 665,
         ReportAndUserDoNotMatch = 670,
         IncorrectUserNameOrPassword = 680,
-        DuplicateReportFound = 690
+        DuplicateReportFound = 690,
     }
 
     public class ErrorObject
