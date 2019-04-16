@@ -61,11 +61,22 @@ namespace Api.Controllers
 
                 var auth = Encryptor.EncryptAuthRequest(obj);
 
-                if (user == null || user.Password != GetHash(user.Salt, obj.Password) || user.Profile.IsActive == false)
+                if (user == null)
                 {
-                    _logger.Debug($"{GetType().Name}, Post(), Username or password is incorrect for user: " + user.Profile.Initials);
-                    return new CustomErrorActionResult(Request, "Username or password is incorrect", ErrorCodes.IncorrectUserNameOrPassword, HttpStatusCode.Unauthorized);
+                    _logger.Debug($"{GetType().Name}, Post Username is incorrect for user: " + obj.UserName);
+                    return new CustomErrorActionResult(Request, "Username is incorrect", ErrorCodes.UserNotFound, HttpStatusCode.Unauthorized);
                 }
+                else if (user.Password != GetHash(user.Salt, obj.Password))
+                {
+                    _logger.Debug($"{GetType().Name}, Post Password is incorrect for user: " + user.Profile.Initials);
+                    return new CustomErrorActionResult(Request, "Password is incorrect", ErrorCodes.IncorrectUserNameOrPassword, HttpStatusCode.Unauthorized);
+                }
+                else if (user.Profile.IsActive == false)
+                {
+                    _logger.Debug($"{GetType().Name}, Post User is not active: " + user.Profile.Initials);
+                    return new CustomErrorActionResult(Request, "User is not active", ErrorCodes.UserNotActive, HttpStatusCode.Unauthorized);
+                }
+
                 var profile = AutoMapper.Mapper.Map<ProfileViewModel>(user.Profile);
 
                 profile = Encryptor.DecryptProfile(profile);
